@@ -35,7 +35,7 @@ export const RegisterForm = () => {
             type="text" 
             className="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400" id="name" name="name" 
             placeholder="Escribe tu nombre" />
-          <span>{errors.name?.message}</span>
+          <span className='text-red-700 text-xs font-medium'>{errors.name?.message}</span>
         </div>
 
         <div>
@@ -46,7 +46,7 @@ export const RegisterForm = () => {
             className="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400" 
             id="email" name="email" 
             placeholder="Escribe tu email" />
-          <span>{errors.email?.message}</span>
+          <span className='text-red-700 text-xs font-medium'>{errors.email?.message}</span>
         </div>
 
         <div>
@@ -58,7 +58,7 @@ export const RegisterForm = () => {
             id="password" 
             name="password" 
             placeholder="Escribe tu password" />
-          <span>{errors.password?.message}</span>
+          <span className='text-red-700 text-xs font-medium'>{errors.password?.message}</span>
         </div>
 
         <div>
@@ -69,7 +69,7 @@ export const RegisterForm = () => {
             className="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400" id="confirmPassword" 
             name="confirmPassword" 
             placeholder="Confirmar password" />
-          <span>{errors.confirmPassword?.message}</span>
+          <span className='text-red-700 text-xs font-medium'>{errors.confirmPassword?.message}</span>
         </div>
 
         <button className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 cursor-pointer">Crear cuenta</button>

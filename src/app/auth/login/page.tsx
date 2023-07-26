@@ -1,3 +1,4 @@
+import { LoginForm } from "@/components/LoginForm";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -15,6 +16,9 @@ export default function LoginPage() {
       <h2 className="text-center text-2xl font-extrabold">
         Iniciar Sesion
       </h2>
+      <div className="mt-8 mx-auto max-w-md">
+        <LoginForm />
+      </div>
     </div>
   )
 }
