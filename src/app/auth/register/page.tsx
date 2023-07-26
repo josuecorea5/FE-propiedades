@@ -1,5 +1,6 @@
 import { RegisterForm } from "@/components/RegisterForm";
 import { Metadata } from "next";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Bienes Raices | Registro",
@@ -12,6 +13,15 @@ export default function RegisterPage() {
       <h2 className="text-center text-2xl font-extrabold">Crear cuenta</h2>
       <div className="mt-8 mx-auto max-w-md">
         <RegisterForm />
+        <div className="flex space-y-2 items-center justify-between">
+          <Link className="text-xs text-gray-500" href="/auth/login">
+            ¿Ya tienes una cuenta? Inicia sesión
+          </Link>
+
+          <Link className="text-xs text-gray-500"  href="/auth/forgotpassword">
+            ¿Olvidé mi contraseña?
+          </Link>
+        </div>
       </div>
     </div>
   )

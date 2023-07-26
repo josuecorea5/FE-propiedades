@@ -1,5 +1,6 @@
 import { LoginForm } from "@/components/LoginForm";
 import { Metadata } from "next";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Bienes Raices | Iniciar Sesion",
@@ -18,6 +19,15 @@ export default function LoginPage() {
       </h2>
       <div className="mt-8 mx-auto max-w-md">
         <LoginForm />
+        <div className="flex space-y-2 items-center justify-between">
+          <Link className="text-xs text-gray-500" href="/auth/register">
+            ¿No tienes una cuenta? Regístrate
+          </Link>
+
+          <Link className="text-xs text-gray-500"  href="/auth/forgotpassword">
+            ¿Olvidé mi contraseña?
+          </Link>
+        </div>
       </div>
     </div>
   )
