@@ -2,10 +2,10 @@
 
 import { InputsRegister, RegisterForm } from "@/components/RegisterForm";
 import userService from '../../../services/user';
+import { useState } from "react";
 import endpoints from '../../../services'
 import { Metadata } from "next";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 
 export const metadata: Metadata = {
   title: "Bienes Raices | Registro",
@@ -13,13 +13,13 @@ export const metadata: Metadata = {
 };
 
 export default function RegisterPage() {
-  const router = useRouter()
+  const [showEmailConfirmationMessage, setShowEmailConfirmationMessage] = useState(false)
 
   const onSubmit = (data: InputsRegister) => {
     userService.registerUser(endpoints.auth.register, data)
       .then(res => {
         if(res) {
-          router.push('/auth/confirmaccount')
+          setShowEmailConfirmationMessage(true)
         }
       }).catch(err => console.log(err))
   }
@@ -39,6 +39,16 @@ export default function RegisterPage() {
           </Link>
         </div>
       </div>
+      {showEmailConfirmationMessage && (
+        <div className="py-10">
+          <h1 className="text-4xl font-extrabold text-center">
+            Bienes
+            <span className="font-normal">Raices</span>
+          </h1>
+          <p className="text-2xl text-center font-bold">Cuenta creada con correctamente</p>
+          <p className="text-lg text-center">Hemos enviado un email para que puedas confirmar tu cuenta</p>
+        </div>
+      )}
     </div>
   )
 }
