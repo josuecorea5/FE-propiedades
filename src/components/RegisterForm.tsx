@@ -4,11 +4,15 @@ import { z } from 'zod';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod'
 
-type Inputs = {
+export type InputsRegister = {
   name: string,
   email: string,
   password: string,
   confirmPassword: string
+}
+
+type Props = {
+  onSubmit: (data: InputsRegister) => void
 }
 
 const registerSchema = z.object({
@@ -18,16 +22,17 @@ const registerSchema = z.object({
   confirmPassword: z.string()
 }).refine(data => data.password === data.confirmPassword, { message: 'Las contraseñas no coinciden', path: ['confirmPassword'] })
 
-export const RegisterForm = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm<Inputs>({resolver: zodResolver(registerSchema), mode: 'onBlur'});
+export const RegisterForm = ({ onSubmit }: Props) => {
+  const { register, handleSubmit, formState: { errors } } = useForm<InputsRegister>({resolver: zodResolver(registerSchema), mode: 'onBlur'});
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => {
+  const registerUser: SubmitHandler<InputsRegister> = (data) => {
     console.log(data);
+    onSubmit(data);
   }
 
   return (
     <div className="bg-white py-8 px-4 shadow">
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+      <form onSubmit={handleSubmit(registerUser)} className="space-y-5">
         <div>
           <label htmlFor="name" className="block text-sm uppercase text-gray-500 mb-2 font-bold">Nombre completo</label>
           <input 

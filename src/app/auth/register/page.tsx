@@ -1,4 +1,8 @@
-import { RegisterForm } from "@/components/RegisterForm";
+'use client'
+
+import { InputsRegister, RegisterForm } from "@/components/RegisterForm";
+import userService from '../../../services/user';
+import endpoints from '../../../services'
 import { Metadata } from "next";
 import Link from "next/link";
 
@@ -8,11 +12,19 @@ export const metadata: Metadata = {
 };
 
 export default function RegisterPage() {
+
+  const onSubmit = (data: InputsRegister) => {
+    userService.registerUser(endpoints.auth.register, data)
+      .then(res => {
+        console.log(res);
+      }).catch(err => console.log(err))
+  }
+
   return (
     <div>
       <h2 className="text-center text-2xl font-extrabold">Crear cuenta</h2>
       <div className="mt-8 mx-auto max-w-md">
-        <RegisterForm />
+        <RegisterForm onSubmit={onSubmit} />
         <div className="flex space-y-2 items-center justify-between">
           <Link className="text-xs text-gray-500" href="/auth/login">
             ¿Ya tienes una cuenta? Inicia sesión
