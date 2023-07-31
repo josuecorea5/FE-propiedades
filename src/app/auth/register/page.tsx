@@ -5,6 +5,7 @@ import userService from '../../../services/user';
 import endpoints from '../../../services'
 import { Metadata } from "next";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export const metadata: Metadata = {
   title: "Bienes Raices | Registro",
@@ -12,21 +13,24 @@ export const metadata: Metadata = {
 };
 
 export default function RegisterPage() {
+  const router = useRouter()
 
   const onSubmit = (data: InputsRegister) => {
     userService.registerUser(endpoints.auth.register, data)
       .then(res => {
-        console.log(res);
+        if(res) {
+          router.push('/auth/confirmaccount')
+        }
       }).catch(err => console.log(err))
   }
 
   return (
     <div>
       <h2 className="text-center text-2xl font-extrabold">Crear cuenta</h2>
-      <div className="mt-8 mx-auto max-w-md">
+      <div className="mt-8 mx-auto max-w-md flex flex-col gap-2">
         <RegisterForm onSubmit={onSubmit} />
-        <div className="flex space-y-2 items-center justify-between">
-          <Link className="text-xs text-gray-500" href="/auth/login">
+        <div className="flex items-center justify-between">
+          <Link className="flex text-xs text-gray-500" href="/auth/login">
             ¿Ya tienes una cuenta? Inicia sesión
           </Link>
 
