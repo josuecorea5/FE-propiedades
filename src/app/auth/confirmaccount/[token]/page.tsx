@@ -43,14 +43,14 @@ export default function ConfirmAccountPage({ params }: { params: { token: string
       </h1>
         {
           (!isTokenValid && !isLoading) && (
-            <p className="py-2 px-5 rounded-lg w-full font-bold text-center text-white bg-red-500">
+            <p className="py-2 px-5 rounded-lg max-w-md mx-auto font-bold text-center text-white bg-red-500">
               El token no es válido
             </p>
           )
         }
         {
           isTokenValid && (
-            <p className="py-2 px-5 rounded-lg w-full font-bold text-center text-white bg-green-500">
+            <p className="py-2 px-5 rounded-lg max-w-md mx-auto font-bold text-center text-white bg-green-500">
               Cuenta confirmada correctamente
             </p>
           )

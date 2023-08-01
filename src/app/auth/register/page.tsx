@@ -26,19 +26,25 @@ export default function RegisterPage() {
 
   return (
     <div>
-      <h2 className="text-center text-2xl font-extrabold">Crear cuenta</h2>
-      <div className="mt-8 mx-auto max-w-md flex flex-col gap-2">
-        <RegisterForm onSubmit={onSubmit} />
-        <div className="flex items-center justify-between">
-          <Link className="flex text-xs text-gray-500" href="/auth/login">
-            ¿Ya tienes una cuenta? Inicia sesión
-          </Link>
+      {
+        !showEmailConfirmationMessage && (
+          <>
+            <h2 className="text-center text-2xl font-extrabold">Crear cuenta</h2>
+            <div className="mt-8 mx-auto max-w-md flex flex-col gap-2">
+              <RegisterForm onSubmit={onSubmit} />
+              <div className="flex items-center justify-between">
+                <Link className="flex text-xs text-gray-500" href="/auth/login">
+                  ¿Ya tienes una cuenta? Inicia sesión
+                </Link>
 
-          <Link className="text-xs text-gray-500"  href="/auth/forgotpassword">
-            ¿Olvidé mi contraseña?
-          </Link>
-        </div>
-      </div>
+                <Link className="text-xs text-gray-500"  href="/auth/forgotpassword">
+                  ¿Olvidé mi contraseña?
+                </Link>
+              </div>
+            </div>
+          </>
+        )
+      }
       {showEmailConfirmationMessage && (
         <div className="py-10">
           <h1 className="text-4xl font-extrabold text-center">
