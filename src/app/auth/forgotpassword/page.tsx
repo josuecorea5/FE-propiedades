@@ -5,6 +5,7 @@ import endPoints from "@/services";
 import userService from "@/services/user";
 import { Metadata } from "next";
 import Link from "next/link";
+import { useState } from "react";
 
 export const metadata: Metadata = {
   title: "Bienes Raices | Recuperar contraseña",
@@ -13,29 +14,47 @@ export const metadata: Metadata = {
 
 export default function ForgotPasswordPage() {
 
+  const [showError, setShowError] = useState('');
+  const [showEmailConfirmationMessage, setShowEmailConfirmationMessage] = useState(false)
+
   const onSubmit = (data: InputEmail) => {
     userService.forgotPassword(endPoints.auth.forgotPassword, data.email)
       .then((res) => {
-        console.log(res)
+        if(res.error) {
+          setShowError(res.message)
+        }else {
+          setShowEmailConfirmationMessage(true)
+        }
       })
       .catch((err) => {console.log(err)})
   }
 
   return (
     <div>
-    <h2 className="text-center text-2xl font-extrabold">Recuperar contraseña</h2>
-    <div className="mt-8 mx-auto max-w-md">
-      <ForgotPasswordForm onSubmit={onSubmit} />
-      <div className="flex space-y-2 items-center justify-between">
-          <Link className="text-xs text-gray-500" href="/auth/register">
-            ¿No tienes una cuenta? Regístrate
-          </Link>
-
-          <Link className="text-xs text-gray-500"  href="/auth/login">
-            Iniciar sesión
-          </Link>
-        </div>
+      <h2 className="text-center text-2xl font-extrabold">Recuperar contraseña</h2>
+      {
+        !showEmailConfirmationMessage && (
+          <>        
+            <div className="mt-8 mx-auto max-w-md">
+              {showError && <div className="text-red-500 mb-2 text-center">{showError}</div>}
+              <ForgotPasswordForm onSubmit={onSubmit} />
+              <div className="flex space-y-2 items-center justify-between">
+                <Link className="text-xs text-gray-500" href="/auth/register">
+                  ¿No tienes una cuenta? Regístrate
+                </Link>
+                <Link className="text-xs text-gray-500"  href="/auth/login">
+                  Iniciar sesión
+                </Link>
+              </div>
+            </div>
+          </>
+        )
+      }
+      {showEmailConfirmationMessage && (
+        <>
+          <p className="text-lg text-center">Hemos enviado un email para que puedas reestablecer tu contraseña</p>
+        </>
+      )}
     </div>
-  </div>
   )
 }
