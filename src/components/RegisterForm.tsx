@@ -62,18 +62,18 @@ export const RegisterForm = ({ onSubmit }: Props) => {
             className="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400" 
             id="password" 
             name="password" 
-            placeholder="Escribe tu password" />
+            placeholder="Escribe tu contraseña" />
           <span className='text-red-700 text-xs font-medium'>{errors.password?.message}</span>
         </div>
 
         <div>
-          <label htmlFor="confirmPassword" className="block text-sm uppercase text-gray-500 mb-2 font-bold">Confirmar password</label>
+          <label htmlFor="confirmPassword" className="block text-sm uppercase text-gray-500 mb-2 font-bold">Confirmar contraseña</label>
           <input 
             {...register("confirmPassword")}
             type="password" 
             className="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400" id="confirmPassword" 
             name="confirmPassword" 
-            placeholder="Confirmar password" />
+            placeholder="Confirmar contraseña" />
           <span className='text-red-700 text-xs font-medium'>{errors.confirmPassword?.message}</span>
         </div>
 
