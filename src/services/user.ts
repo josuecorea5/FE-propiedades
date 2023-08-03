@@ -45,6 +45,23 @@ class UserService {
       console.log(error);
     }
   }
+
+  static async forgotPassword(url: string, email: string) {
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        body: JSON.stringify({ email }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+      });
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
 }
 
 export default UserService;

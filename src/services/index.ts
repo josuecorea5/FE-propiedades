@@ -6,6 +6,7 @@ const endPoints = {
     login: `${API}/api/${VERSION}/login`,
     register: `${API}/api/${VERSION}/register`,
     confirm: (token: string) => `${API}/api/${VERSION}/confirm/${token}`,
+    forgotPassword: `${API}/api/${VERSION}/forgot-password`,
   }
 }
 

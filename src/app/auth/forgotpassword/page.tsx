@@ -1,4 +1,8 @@
-import { ForgotPasswordForm } from "@/components/ForgotPasswordForm";
+'use client'
+
+import { ForgotPasswordForm, InputEmail } from "@/components/ForgotPasswordForm";
+import endPoints from "@/services";
+import userService from "@/services/user";
 import { Metadata } from "next";
 import Link from "next/link";
 
@@ -8,11 +12,20 @@ export const metadata: Metadata = {
 };
 
 export default function ForgotPasswordPage() {
+
+  const onSubmit = (data: InputEmail) => {
+    userService.forgotPassword(endPoints.auth.forgotPassword, data.email)
+      .then((res) => {
+        console.log(res)
+      })
+      .catch((err) => {console.log(err)})
+  }
+
   return (
     <div>
     <h2 className="text-center text-2xl font-extrabold">Recuperar contraseña</h2>
     <div className="mt-8 mx-auto max-w-md">
-      <ForgotPasswordForm />
+      <ForgotPasswordForm onSubmit={onSubmit} />
       <div className="flex space-y-2 items-center justify-between">
           <Link className="text-xs text-gray-500" href="/auth/register">
             ¿No tienes una cuenta? Regístrate
