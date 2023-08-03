@@ -1,4 +1,8 @@
-import { LoginForm } from "@/components/LoginForm";
+'use client'
+
+import { InputsLogin, LoginForm } from "@/components/LoginForm";
+import endPoints from "@/services";
+import userService from "@/services/user";
 import { Metadata } from "next";
 import Link from "next/link";
 
@@ -8,6 +12,15 @@ export const metadata: Metadata = {
 };
 
 export default function LoginPage() {
+
+  const onSubmit = (data: InputsLogin) => {
+    userService.loginUser(endPoints.auth.login, data)
+      .then(res => {
+        console.log(res)
+      })
+      .catch(err => console.log(err))
+  }
+
   return (
     <div className="py-10">
       <h1 className="text-4xl font-extrabold text-center">
@@ -17,9 +30,9 @@ export default function LoginPage() {
       <h2 className="text-center text-2xl font-extrabold">
         Iniciar Sesion
       </h2>
-      <div className="mt-8 mx-auto max-w-md">
-        <LoginForm />
-        <div className="flex space-y-2 items-center justify-between">
+      <div className="mt-8 mx-auto max-w-md flex flex-col gap-2">
+        <LoginForm onSubmit={onSubmit} />
+        <div className="flex items-center justify-between">
           <Link className="text-xs text-gray-500" href="/auth/register">
             ¿No tienes una cuenta? Regístrate
           </Link>

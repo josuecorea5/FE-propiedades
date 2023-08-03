@@ -4,7 +4,7 @@ import { z } from 'zod';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod'
 
-type Inputs = {
+export type InputsLogin = {
   email: string,
   password: string
 }
@@ -14,16 +14,20 @@ const loginSchema = z.object({
   password: z.string().nonempty({ message: 'Debes ingresar tu contraseña' })
 })
 
-export const LoginForm = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm<Inputs>({resolver: zodResolver(loginSchema), mode: 'onBlur'});
+type Props = {
+  onSubmit: (data: InputsLogin) => void
+}
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => {
-    console.log(data);
+export const LoginForm = ({ onSubmit }: Props) => {
+  const { register, handleSubmit, formState: { errors } } = useForm<InputsLogin>({resolver: zodResolver(loginSchema), mode: 'onBlur'});
+
+  const loginUser: SubmitHandler<InputsLogin> = (data) => {
+    onSubmit(data);
   }
 
   return (
     <div className="bg-white py-8 px-4 shadow">
-      <form onSubmit={handleSubmit(onSubmit)}     className="space-y-5">
+      <form onSubmit={handleSubmit(loginUser)}     className="space-y-5">
         <div>
           <label htmlFor="email" className="block text-sm uppercase text-gray-500 mb-2 font-bold">Email</label>
           <input 
