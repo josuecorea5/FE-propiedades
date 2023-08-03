@@ -25,7 +25,7 @@ export const ResetPasswordForm = ({ onSubmit }: Props) => {
 
   return (
     <div className='bg-white py-8 px-4 shadow'>
-      <form onSubmit={handleSubmit(resetPassword)}>
+      <form onSubmit={handleSubmit(resetPassword)} className='space-y-5'>
         <div>
             <label htmlFor="password" className="block text-sm uppercase text-gray-500 mb-2 font-bold">Password</label>
             <input 

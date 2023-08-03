@@ -7,7 +7,8 @@ const endPoints = {
     register: `${API}/api/${VERSION}/register`,
     confirm: (token: string) => `${API}/api/${VERSION}/confirm/${token}`,
     forgotPassword: `${API}/api/${VERSION}/forgot-password`,
-    confirmPassworsToken: (token: string) => `${API}/api/${VERSION}/reset-password/${token}` 
+    confirmPassworsToken: (token: string) => `${API}/api/${VERSION}/reset-password/${token}`,
+    resetPassword: (token: string) => `${API}/api/${VERSION}/reset-password/${token}`
   }
 }
 

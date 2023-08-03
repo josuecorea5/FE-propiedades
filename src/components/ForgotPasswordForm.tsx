@@ -26,7 +26,7 @@ export const ForgotPasswordForm = ({ onSubmit }: Props) => {
 
   return (
     <div className="bg-white py-8 px-4 shadow">
-      <form onSubmit={handleSubmit(sendEmailRecoveryPassword)}     className="space-y-5">
+      <form onSubmit={handleSubmit(sendEmailRecoveryPassword)} className="space-y-5">
         <div>
           <label htmlFor="email" className="block text-sm uppercase text-gray-500 mb-2 font-bold">Email</label>
           <input 

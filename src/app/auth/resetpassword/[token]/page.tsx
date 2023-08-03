@@ -3,11 +3,15 @@ import { Spinner } from '@/components/Spinner';
 import { useState, useEffect } from 'react'
 import endPoints from '@/services';
 import userService from '@/services/user';
+import { InputResetPassword, ResetPasswordForm } from '@/components/ResetPasswordForm';
+import Link from 'next/link';
 
 export default function ResetPasswordPage({ params }: {params: {token: string}}) {
   
   const [isTokenValid, setIsTokenValid] = useState(false)
   const [isLoading, setIsLoading] = useState(true);
+  const [showError, setShowError] = useState(false);
+  const [showResetPasswordMessage, setShowResetPasswordMessage] = useState(false);
 
   useEffect(() => {
     userService.confirmResetPasswordToken(endPoints.auth.confirmPassworsToken(params.token))
@@ -18,10 +22,22 @@ export default function ResetPasswordPage({ params }: {params: {token: string}})
         }else {
           setIsTokenValid(true);
           setIsLoading(false);
+          setShowResetPasswordMessage(true)
         }
       })
       .catch(err => console.log(err))
   }, [params.token])
+
+  const onSubmit = (input: InputResetPassword) => {
+    userService.resetPassword(endPoints.auth.resetPassword(params.token), input)
+      .then(res => {
+        if(res.error) {
+          setShowError(true)
+        }else {
+
+        }
+      })
+  }
 
   return (
     <div className='py-10'>
@@ -38,7 +54,19 @@ export default function ResetPasswordPage({ params }: {params: {token: string}})
       }
       {
         isTokenValid && (
-          <div>FORM PASSWORD</div>
+          <div className='mt-8 mx-auto max-w-md'>
+            <ResetPasswordForm onSubmit={onSubmit} />
+          </div>
+        )
+      }
+      {
+        (!showResetPasswordMessage && !isLoading) && (
+          <div className='max-w-md mx-auto'>
+            <p className='bg-green-500 text-white py-2 px-4'>
+              Contraseña actualizada correctamente. Ir a
+              <Link className='font-bold' href='/auth/login'> Login</Link>
+            </p>
+          </div>
         )
       }
       {
