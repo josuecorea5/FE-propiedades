@@ -1,5 +1,6 @@
 'use client'
 
+import { useState } from "react";
 import { InputsLogin, LoginForm } from "@/components/LoginForm";
 import endPoints from "@/services";
 import userService from "@/services/user";
@@ -13,10 +14,14 @@ export const metadata: Metadata = {
 
 export default function LoginPage() {
 
+  const [showErrorMessage, setShowErrorMessage] = useState('');
+
   const onSubmit = (data: InputsLogin) => {
     userService.loginUser(endPoints.auth.login, data)
       .then(res => {
-        console.log(res)
+        if(res.error) {
+          setShowErrorMessage(res.message);
+        }
       })
       .catch(err => console.log(err))
   }
@@ -31,6 +36,7 @@ export default function LoginPage() {
         Iniciar Sesion
       </h2>
       <div className="mt-8 mx-auto max-w-md flex flex-col gap-2">
+        {showErrorMessage && <div className="text-red-500 mb-2 text-center">{showErrorMessage}</div>}
         <LoginForm onSubmit={onSubmit} />
         <div className="flex items-center justify-between">
           <Link className="text-xs text-gray-500" href="/auth/register">
