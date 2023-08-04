@@ -1,10 +1,10 @@
 'use client'
 
+import { Metadata } from "next";
 import { InputsRegister, RegisterForm } from "@/components/RegisterForm";
 import userService from '../../../services/user';
 import { useState } from "react";
 import endpoints from '../../../services'
-import { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
