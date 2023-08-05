@@ -1,6 +1,8 @@
 'use client'
 
 import { useState } from "react";
+import Cookies from "js-cookie";
+import { useRouter } from "next/navigation";
 import { InputsLogin, LoginForm } from "@/components/LoginForm";
 import endPoints from "@/services";
 import userService from "@/services/user";
@@ -15,12 +17,16 @@ export const metadata: Metadata = {
 export default function LoginPage() {
 
   const [showErrorMessage, setShowErrorMessage] = useState('');
+  const router = useRouter();
 
   const onSubmit = (data: InputsLogin) => {
     userService.loginUser(endPoints.auth.login, data)
       .then(res => {
         if(res.error) {
           setShowErrorMessage(res.message);
+        }else {
+          Cookies.set('token', res.token, { expires: 1,sameSite: 'Strict' });
+          router.push('/');
         }
       })
       .catch(err => console.log(err))
