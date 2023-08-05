@@ -8,6 +8,7 @@ import endPoints from "@/services";
 import userService from "@/services/user";
 import { Metadata } from "next";
 import Link from "next/link";
+import { useAuth } from "@/hooks/useAuth";
 
 export const metadata: Metadata = {
   title: "Bienes Raices | Iniciar Sesion",
@@ -15,6 +16,7 @@ export const metadata: Metadata = {
 };
 
 export default function LoginPage() {
+  const { login } = useAuth();
 
   const [showErrorMessage, setShowErrorMessage] = useState('');
   const router = useRouter();
@@ -25,8 +27,8 @@ export default function LoginPage() {
         if(res.error) {
           setShowErrorMessage(res.message);
         }else {
-          Cookies.set('token', res.token, { expires: 1,sameSite: 'Strict' });
-          router.push('/');
+          login(res.token);
+          router.push('/mis-propiedades');
         }
       })
       .catch(err => console.log(err))
