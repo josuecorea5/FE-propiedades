@@ -10,7 +10,7 @@ export default function MyPropertiesPage() {
       <h2 className="text-center text-2xl font-extrabold">
         Mis propiedades
       </h2>
-      <Link className="rounded py-2 px-10 bg-indigo-600 hover:bg-indigo-700 text-sm font-bold text-center text-white inline-block my-5 w-full md:w-auto" href='/mis-propiedades/crear'>
+      <Link className="rounded py-2 px-10 bg-indigo-600 hover:bg-indigo-700 text-sm font-bold text-center text-white inline-block my-5 w-full md:w-auto" href='/mis-propiedades/create'>
         Publicar propiedad
       </Link>
     </div>
