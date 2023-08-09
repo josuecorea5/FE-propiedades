@@ -1,10 +1,3 @@
-import dynamic from "next/dynamic";
-
-const Map = dynamic(() => import('./LeafletMap'), {
-  ssr: false,
-  loading: () => <p>Cargando...</p>
-})
-
 export const CreatePropertyForm = () => {
   return (
     <div className="bg-white shadow py-8 px-4 rounded mx-auto max-w-4xl my-10 md:px-10">
@@ -83,7 +76,7 @@ export const CreatePropertyForm = () => {
           </div>
         </div>
         <div>
-          <Map />
+          Here should be a map
         </div>
       </form>
     </div>
