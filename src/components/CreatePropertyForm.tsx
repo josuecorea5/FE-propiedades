@@ -19,6 +19,15 @@ export const CreatePropertyForm = () => {
           <span className='text-red-700 text-xs font-medium'>Errores</span>
         </div>
 
+        <div>
+          <label htmlFor="description" className="block text-sm uppercase text-gray-500 mb-2 font-bold">Descripción</label>
+          <textarea 
+            className="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400" 
+            id="description" name="description" 
+            placeholder="Descripción de la propiedad"></textarea>
+          <span className='text-red-700 text-xs font-medium'>Errores</span>
+        </div>
+
         <div className="md:flex md:gap-4 space-y-5 md:space-y-0">
           <div className="md:w-1/2">
             <label htmlFor="category" className="block text-sm uppercase text-gray-500 mb-2 font-bold">Categoría</label>
