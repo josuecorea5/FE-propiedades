@@ -77,6 +77,14 @@ export const CreatePropertyForm = () => {
             <span className='text-red-700 text-xs font-medium'>Errores</span>
           </div>
         </div>
+        <div className="border-gray-200 border-t py-5 space-y-5">
+          <h3 className="text-lg leading-6 font-medium text-gray-900">
+            Información general de la propiedad
+          </h3>
+          <p className="text-gray-600">
+            Ubica la propiedad en el mapa
+          </p>
+        </div>
         <div>
           <PigeonMap />
         </div>
