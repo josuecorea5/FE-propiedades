@@ -1,6 +1,20 @@
+import { useEffect, useState } from "react";
 import { PigeonMap } from "./PigeonMap";
 
+type Category = {
+  id: number;
+  name: string;
+}
+
+type Prices = Category;
+
 export const CreatePropertyForm = () => {
+
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [prices, setPrices] = useState<Prices[]>([]);
+
+  useEffect(() => {}, []);
+
   return (
     <div className="bg-white shadow py-8 px-4 rounded mx-auto max-w-4xl my-10 md:px-10">
       <form className="space-y-5">

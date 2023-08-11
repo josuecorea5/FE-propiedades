@@ -9,6 +9,12 @@ const endPoints = {
     forgotPassword: `${API}/api/${VERSION}/forgot-password`,
     confirmPassworsToken: (token: string) => `${API}/api/${VERSION}/reset-password/${token}`,
     resetPassword: (token: string) => `${API}/api/${VERSION}/reset-password/${token}`
+  },
+  categories: {
+    getAll: `${API}/api/${VERSION}/categories`,
+  },
+  prices: {
+    getAll: `${API}/api/${VERSION}/prices`,
   }
 }
 
