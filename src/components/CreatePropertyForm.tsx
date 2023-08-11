@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
 import { PigeonMap } from "./PigeonMap";
+import endPoints from "../services/index";
+import categoriesService from "../services/categories";
+import pricesService from "../services/prices";
 
 type Category = {
   id: number;
@@ -13,7 +16,18 @@ export const CreatePropertyForm = () => {
   const [categories, setCategories] = useState<Category[]>([]);
   const [prices, setPrices] = useState<Prices[]>([]);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    async function getCategoriesAndPrices() {
+      const [categoriesData, pricesData]: [Category[], Prices[]] = await Promise.all([
+        categoriesService.getCategories(endPoints.categories.getAll),
+        pricesService.getPrices(endPoints.prices.getAll)
+      ])
+      setCategories(categoriesData);
+      setPrices(pricesData);
+    }
+
+    getCategoriesAndPrices();
+  }, []);
 
   return (
     <div className="bg-white shadow py-8 px-4 rounded mx-auto max-w-4xl my-10 md:px-10">
@@ -50,6 +64,11 @@ export const CreatePropertyForm = () => {
               id="category" name="category" 
             >
               <option value="">-- Seleccionar --</option>
+              {
+                categories.map((category) => (
+                  <option value={category.id} key={category.id}>{category.name}</option>
+                ))
+              }
             </select>
             <span className='text-red-700 text-xs font-medium'>Errores</span>
           </div>
@@ -61,6 +80,11 @@ export const CreatePropertyForm = () => {
               id="price" name="price" 
             >
               <option value="">-- Seleccionar --</option>
+              {
+                prices.map((price) => (
+                  <option value={price.id} key={price.id}>{price.name}</option>
+                ))
+              }
             </select>
             <span className='text-red-700 text-xs font-medium'>Errores</span>
           </div>
@@ -85,6 +109,7 @@ export const CreatePropertyForm = () => {
               id="garages" name="garages" 
             >
               <option value="">-- Seleccionar --</option>
+              {}
             </select>
             <span className='text-red-700 text-xs font-medium'>Errores</span>
           </div>
