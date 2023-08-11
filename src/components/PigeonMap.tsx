@@ -1,7 +1,17 @@
 import { Map, Marker, Overlay } from 'pigeon-maps';
 import { useState } from 'react';
 
-export const PigeonMap = () => {
+type InfoCoordinates = {
+  lat: number;
+  lng: number;
+  street: string;
+}
+
+type Props = {
+  setInfoCoordinates: (data: InfoCoordinates) => void
+}
+
+export const PigeonMap = ({ setInfoCoordinates }: Props) => {
   const [width, setWidth] = useState([13.4785139, -88.2102891]);
   const [center, setCenter] = useState([13.4785139, -88.2102891]);
   const [showMessage, setShowMessage] = useState(false);
@@ -22,7 +32,16 @@ export const PigeonMap = () => {
             .then(data => {
               setShowMessage(true);
               setMessage(data.display_name);
+              setInfoCoordinates({
+                lat: latLng[0],
+                lng: latLng[1],
+                street: data.display_name,
+              })
             })
+            .catch(error => {
+              console.log(error);
+            });
+
         }}
       >
         <Marker 
