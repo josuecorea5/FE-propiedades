@@ -3,9 +3,10 @@ import { PigeonMap } from "./PigeonMap";
 import endPoints from "../services/index";
 import categoriesService from "../services/categories";
 import pricesService from "../services/prices";
-import { useForm, SubmitHandler } from "react-hook-form";
-import { set, z} from 'zod';
+import { useForm, SubmitHandler, set } from "react-hook-form";
+import { z } from 'zod';
 import { zodResolver } from "@hookform/resolvers/zod";
+import { DragAndDropImage } from "./DragAndDropImage";
 
 const numberOfOptions = Array.from(Array(5).keys())
 
@@ -33,6 +34,7 @@ export type InputsProperty = {
   street: string;
   lat: number;
   lng: number;
+  image: File
 }
 
 const propertySchema = z.object({
@@ -54,7 +56,9 @@ export const CreatePropertyForm = ( { onSubmit }: Props) => {
   const [categories, setCategories] = useState<Category[]>([]);
   const [prices, setPrices] = useState<Prices[]>([]);
   const [infoCoordinates, setInfoCoordinates] = useState<InfoCoordinates>({} as InfoCoordinates);
+  const [image, setImage] = useState<File>();
   const [errorCoordinates, setErrorCoordinates] = useState(false);
+  const [errorImage, setErrorImage] = useState(false);
 
   const { register, handleSubmit, formState: { errors } } = useForm<InputsProperty>({ resolver: zodResolver(propertySchema), mode: 'onBlur'})
 
@@ -75,12 +79,19 @@ export const CreatePropertyForm = ( { onSubmit }: Props) => {
   const submitPropertyForm: SubmitHandler<InputsProperty> = (data) => {
     if(!infoCoordinates.lat || !infoCoordinates.lng || !infoCoordinates.street) {
       setErrorCoordinates(true);
+      setErrorImage(true);
+      return;
+    }
+    if(!image) {
+      setErrorImage(true);
       return;
     }
     setErrorCoordinates(false);
+    setErrorImage(false);
     data.street = infoCoordinates.street;
     data.lat = infoCoordinates.lat;
     data.lng = infoCoordinates.lng;
+    data.image = image as File;
     onSubmit(data);
   }
 
@@ -205,6 +216,13 @@ export const CreatePropertyForm = ( { onSubmit }: Props) => {
           <h3 className="text-lg leading-6 font-medium text-gray-900">
             Información general de la propiedad
           </h3>
+          <p>Imágenes de la propiedad</p>
+          {
+            errorImage && (<span className='text-red-700 text-xs font-medium'>
+              Debes seleccionar una imagen para la propiedad
+            </span>)
+          }
+          <DragAndDropImage setImage={setImage} />
           <p className="text-gray-600">
             Ubica la propiedad en el mapa
           </p>
@@ -217,7 +235,7 @@ export const CreatePropertyForm = ( { onSubmit }: Props) => {
         <div>
           <PigeonMap setInfoCoordinates={setInfoCoordinates} />
         </div>
-        <button className="w-full py-3 bg-indigo-600 hover:bg-indigo-700 rounded text-white font-bold cursor-pointer">Image</button>
+        <button className="w-full py-3 bg-indigo-600 hover:bg-indigo-700 rounded text-white font-bold cursor-pointer">Crear propiedad</button>
       </form>
     </div>
   )
