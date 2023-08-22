@@ -1,6 +1,8 @@
 'use client'
 
 import { CreatePropertyForm, InputsProperty } from "@/components/CreatePropertyForm";
+import endPoints from "@/services";
+import propertyService from '@/services/properties'
 
 type Property = InputsProperty & {
   street: string;
@@ -11,7 +13,26 @@ type Property = InputsProperty & {
 export default function CreatePropertyPage() {
 
   const onSubmit = (data: InputsProperty) => {
-    console.log(data);
+    const formData = new FormData();
+    formData.append('title', data.title);
+    formData.append('description', data.description);
+    formData.append('categoryId', data.categoryId);
+    formData.append('priceId', data.priceId);
+    formData.append('bedrooms', data.bedrooms);
+    formData.append('garages', data.garages);
+    formData.append('bathrooms', data.bathrooms);
+    formData.append('image', data.image);
+    formData.append('lat', data.lat.toString());
+    formData.append('lng', data.lng.toString());
+    formData.append('street', data.street);
+
+    propertyService.createProperty(endPoints.properties.create, formData)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   return (

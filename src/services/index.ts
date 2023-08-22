@@ -15,6 +15,10 @@ const endPoints = {
   },
   prices: {
     getAll: `${API}/api/${VERSION}/prices`,
+  },
+  properties: {
+    getAll: `${API}/api/${VERSION}/properties`,
+    create: `${API}/api/${VERSION}/properties`,
   }
 }
 
