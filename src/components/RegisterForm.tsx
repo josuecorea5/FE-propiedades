@@ -26,7 +26,6 @@ export const RegisterForm = ({ onSubmit }: Props) => {
   const { register, handleSubmit, formState: { errors } } = useForm<InputsRegister>({resolver: zodResolver(registerSchema), mode: 'onBlur'});
 
   const registerUser: SubmitHandler<InputsRegister> = (data) => {
-    console.log(data);
     onSubmit(data);
   }
 

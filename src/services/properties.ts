@@ -10,8 +10,7 @@ class PropertyService {
         'Authorization': `Bearer ${this.token}`
       }
     });
-    const data = await response.json();
-    return data;
+    return response;
   }
 
   static async createProperty(url: string, property: FormData) {
