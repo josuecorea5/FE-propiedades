@@ -14,7 +14,8 @@ export default function MyPropertiesPage() {
   useEffect(() => {
 
     async function getProperties() {
-      const res = await propertyService.getProperties(endPoints.properties.getAll)
+      try {
+        const res = await propertyService.getProperties(endPoints.properties.getAll)
       if(res.status === 500) {
         router.push('/auth/login')
       }else {
@@ -26,6 +27,9 @@ export default function MyPropertiesPage() {
           setAreProperties(true)
           setProperties(data)
         }
+      }
+      } catch (error) {
+        console.log(error)
       }
     }
 

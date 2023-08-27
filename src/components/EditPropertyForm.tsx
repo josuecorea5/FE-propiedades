@@ -6,6 +6,7 @@ import pricesService from "../services/prices";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { z } from 'zod';
 import { zodResolver } from "@hookform/resolvers/zod";
+import { DragAndDropImage } from "./DragAndDropImage";
 
 const numberOfOptions = Array.from(Array(5).keys())
 
@@ -33,6 +34,7 @@ export type InputsPropertyEdit = {
   street: string;
   lat: number;
   lng: number;
+  image: File
 }
 
 const propertySchema = z.object({
@@ -56,6 +58,8 @@ export const EditPropertyForm = ( { onSubmit, property }: Props) => {
   const [prices, setPrices] = useState<Prices[]>([]);
   const [infoCoordinates, setInfoCoordinates] = useState<InfoCoordinates>({} as InfoCoordinates);
   const [errorCoordinates, setErrorCoordinates] = useState(false);
+  const [errorImage, setErrorImage] = useState(false);
+  const [image, setImage] = useState<File | string>();
 
   const { register, handleSubmit, setValue, formState: { errors } } = useForm<InputsPropertyEdit>({ resolver: zodResolver(propertySchema), mode: 'onBlur'})
 
@@ -82,18 +86,27 @@ export const EditPropertyForm = ( { onSubmit, property }: Props) => {
     setValue('garages', property.garages?.toString())
     setValue('bathrooms', property.bathrooms?.toString())
     setInfoCoordinates({lat: property.lat, lng: property.lng, street: property.street})
+    console.log('PROPERTY', property)
   }, [setValue, property])
 
   const submitPropertyForm: SubmitHandler<InputsPropertyEdit> = (data) => {
-    console.log(data)
     if(!infoCoordinates.lat || !infoCoordinates.lng || !infoCoordinates.street) {
       setErrorCoordinates(true);
+      setErrorImage(true);
       return;
     }
+    console.log('IMAGE', image)
+    if(!image) {
+      setErrorImage(true);
+      return;
+    }
+
     setErrorCoordinates(false);
+    setErrorImage(false);
     data.street = infoCoordinates.street;
     data.lat = infoCoordinates.lat;
     data.lng = infoCoordinates.lng;
+    data.image = image as File;
     onSubmit(data);
   }
 
@@ -214,6 +227,21 @@ export const EditPropertyForm = ( { onSubmit, property }: Props) => {
             <span className='text-red-700 text-xs font-medium'>{errors?.bathrooms?.message}</span>
           </div>
         </div>
+        <div className="border-gray-200 border-t py-5 space-y-5">
+          <h3 className="text-lg leading-6 font-medium text-gray-900">
+            Información general de la propiedad
+          </h3>
+          <p>Imágenes de la propiedad</p>
+          {
+            errorImage && (<span className='text-red-700 text-xs font-medium'>
+              Debes seleccionar una imagen para la propiedad
+            </span>)
+          }
+          <DragAndDropImage setImage={setImage} image={property.image} />
+          <p className="text-gray-600">
+            Ubica la propiedad en el mapa
+          </p>
+        </div>
         {
           errorCoordinates && (<span className='text-red-700 text-xs font-medium'>
             Debes seleccionar la ubicación de la propiedad
@@ -222,7 +250,7 @@ export const EditPropertyForm = ( { onSubmit, property }: Props) => {
         <div>
           <PigeonMap setInfoCoordinates={setInfoCoordinates} infoCoordinates={infoCoordinates} />
         </div>
-        <button className="w-full py-3 bg-indigo-600 hover:bg-indigo-700 rounded text-white font-bold cursor-pointer">Crear propiedad</button>
+        <button className="w-full py-3 bg-indigo-600 hover:bg-indigo-700 rounded text-white font-bold cursor-pointer">Guardar cambios</button>
       </form>
     </div>
   )

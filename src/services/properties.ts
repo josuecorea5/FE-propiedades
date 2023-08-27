@@ -39,6 +39,21 @@ class PropertyService {
       console.log(error); 
     }
   }
+
+  static async updateProperty(url: string, property: FormData) {
+    try {
+      const response = await fetch(url, {
+        method: 'PUT',
+        headers: {
+          'Authorization': `Bearer ${this.token}`
+        },
+        body: property
+      })
+      return response;
+    } catch (error) {
+      console.log(error)
+    }
+  }
 }
 
 export default PropertyService;
