@@ -74,12 +74,12 @@ export default function MyPropertiesPage() {
                         <button className={`px-2 py-2 md:py-1 text-xs leading-5 font-semibold rounded ${property.published ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
                           {property.published ? 'Publicado' : 'No publicado'}
                         </button>
-                        <button className='px-2 py-2 md:py-1 text-xs leading-5 font-semibold rounded bg-indigo-100 text-indigo-800'>
+                        <Link href={`mis-propiedades/edit/${property.id}`} className='px-2 py-2 md:py-1 text-xs leading-5 font-semibold rounded bg-indigo-100 text-indigo-800'>
                           Editar
-                        </button>
-                        <button className='px-2 py-2 md:py-1 text-xs leading-5 font-semibold rounded bg-red-100 text-red-800'>
+                        </Link>
+                        <Link href='#' className='px-2 py-2 md:py-1 text-xs leading-5 font-semibold rounded bg-red-100 text-red-800'>
                           Eliminar
-                        </button>
+                        </Link>
                       </div>
                     </div>
                   </li>

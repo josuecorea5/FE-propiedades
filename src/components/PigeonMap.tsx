@@ -1,5 +1,5 @@
 import { Map, Marker, Overlay } from 'pigeon-maps';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 type InfoCoordinates = {
   lat: number;
@@ -9,19 +9,29 @@ type InfoCoordinates = {
 
 type Props = {
   setInfoCoordinates: (data: InfoCoordinates) => void
+  infoCoordinates: InfoCoordinates
 }
 
-export const PigeonMap = ({ setInfoCoordinates }: Props) => {
+export const PigeonMap = ({ setInfoCoordinates, infoCoordinates }: Props) => {
   const [width, setWidth] = useState([13.4785139, -88.2102891]);
   const [center, setCenter] = useState([13.4785139, -88.2102891]);
   const [showMessage, setShowMessage] = useState(false);
   const [message, setMessage] = useState('');
+
+useEffect(() => {
+  if(Number(infoCoordinates.lat) !== 0 && Number(infoCoordinates.lng) !== 0) {
+    setWidth([Number(infoCoordinates.lat), Number(infoCoordinates.lng)]);
+    setCenter([Number(infoCoordinates.lat), Number(infoCoordinates.lng)]);
+    setMessage(infoCoordinates.street);
+    setShowMessage(true);
+  }
+}, [infoCoordinates])
   
   return (
     <div>
       <Map 
         height={400} 
-        defaultCenter={[13.4785139, -88.2102891]} 
+        defaultCenter={[width[0], width[1]]} 
         defaultZoom={11}
         center={[center[0], center[1]]}
         onClick={( { latLng }) => {

@@ -6,7 +6,6 @@ import pricesService from "../services/prices";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { z } from 'zod';
 import { zodResolver } from "@hookform/resolvers/zod";
-import { DragAndDropImage } from "./DragAndDropImage";
 
 const numberOfOptions = Array.from(Array(5).keys())
 
@@ -23,7 +22,7 @@ type InfoCoordinates = {
 
 type Prices = Category;
 
-export type InputsProperty = {
+export type InputsPropertyEdit = {
   title: string;
   description: string;
   categoryId: string;
@@ -34,7 +33,6 @@ export type InputsProperty = {
   street: string;
   lat: number;
   lng: number;
-  image: File
 }
 
 const propertySchema = z.object({
@@ -48,19 +46,18 @@ const propertySchema = z.object({
 });
 
 type Props = {
-  onSubmit: (data: InputsProperty) => void
+  onSubmit: (data: InputsPropertyEdit) => void;
+  property: any;
 }
 
-export const CreatePropertyForm = ( { onSubmit }: Props) => {
+export const EditPropertyForm = ( { onSubmit, property }: Props) => {
 
   const [categories, setCategories] = useState<Category[]>([]);
   const [prices, setPrices] = useState<Prices[]>([]);
   const [infoCoordinates, setInfoCoordinates] = useState<InfoCoordinates>({} as InfoCoordinates);
-  const [image, setImage] = useState<File>();
   const [errorCoordinates, setErrorCoordinates] = useState(false);
-  const [errorImage, setErrorImage] = useState(false);
 
-  const { register, handleSubmit, formState: { errors } } = useForm<InputsProperty>({ resolver: zodResolver(propertySchema), mode: 'onBlur'})
+  const { register, handleSubmit, setValue, formState: { errors } } = useForm<InputsPropertyEdit>({ resolver: zodResolver(propertySchema), mode: 'onBlur'})
 
   useEffect(() => {
     async function getCategoriesAndPrices() {
@@ -76,22 +73,27 @@ export const CreatePropertyForm = ( { onSubmit }: Props) => {
     console.log('INFO', infoCoordinates);
   }, [infoCoordinates]);
 
-  const submitPropertyForm: SubmitHandler<InputsProperty> = (data) => {
+  useEffect(() => {
+    setValue('title', property.title)
+    setValue('description', property.description)
+    setValue('categoryId', property.categoryId?.toString())
+    setValue('priceId', property.priceId?.toString())
+    setValue('bedrooms', property.bedrooms?.toString())
+    setValue('garages', property.garages?.toString())
+    setValue('bathrooms', property.bathrooms?.toString())
+    setInfoCoordinates({lat: property.lat, lng: property.lng, street: property.street})
+  }, [setValue, property])
+
+  const submitPropertyForm: SubmitHandler<InputsPropertyEdit> = (data) => {
+    console.log(data)
     if(!infoCoordinates.lat || !infoCoordinates.lng || !infoCoordinates.street) {
       setErrorCoordinates(true);
-      setErrorImage(true);
-      return;
-    }
-    if(!image) {
-      setErrorImage(true);
       return;
     }
     setErrorCoordinates(false);
-    setErrorImage(false);
     data.street = infoCoordinates.street;
     data.lat = infoCoordinates.lat;
     data.lng = infoCoordinates.lng;
-    data.image = image as File;
     onSubmit(data);
   }
 
@@ -211,21 +213,6 @@ export const CreatePropertyForm = ( { onSubmit }: Props) => {
             </select>
             <span className='text-red-700 text-xs font-medium'>{errors?.bathrooms?.message}</span>
           </div>
-        </div>
-        <div className="border-gray-200 border-t py-5 space-y-5">
-          <h3 className="text-lg leading-6 font-medium text-gray-900">
-            Información general de la propiedad
-          </h3>
-          <p>Imágenes de la propiedad</p>
-          {
-            errorImage && (<span className='text-red-700 text-xs font-medium'>
-              Debes seleccionar una imagen para la propiedad
-            </span>)
-          }
-          <DragAndDropImage setImage={setImage} />
-          <p className="text-gray-600">
-            Ubica la propiedad en el mapa
-          </p>
         </div>
         {
           errorCoordinates && (<span className='text-red-700 text-xs font-medium'>

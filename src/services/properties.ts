@@ -13,6 +13,16 @@ class PropertyService {
     return response;
   }
 
+  static async getProperty(url: string) {
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${this.token}`
+      }
+    })
+    return response;
+  }
+
   static async createProperty(url: string, property: FormData) {
     console.log('FORMDATA', property.values())
     try {

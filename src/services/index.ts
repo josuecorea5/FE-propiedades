@@ -19,6 +19,7 @@ const endPoints = {
   properties: {
     getAll: `${API}/api/${VERSION}/properties`,
     create: `${API}/api/${VERSION}/properties`,
+    getOne: (id: string) => `${API}/api/${VERSION}/properties/${id}`,
   }
 }
 
