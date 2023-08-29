@@ -54,6 +54,20 @@ class PropertyService {
       console.log(error)
     }
   }
+
+  static async deleteProperty(url: string) {
+    try {
+      const response = await fetch(url, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${this.token}`
+        }
+      })
+      return response;
+    } catch (error) {
+      console.log(error)
+    }
+  }
 }
 
 export default PropertyService;

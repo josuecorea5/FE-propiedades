@@ -1,8 +1,5 @@
 import { useEffect, useState } from "react";
 import { PigeonMap } from "./PigeonMap";
-import endPoints from "../services/index";
-import categoriesService from "../services/categories";
-import pricesService from "../services/prices";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { z } from 'zod';
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -50,32 +47,18 @@ const propertySchema = z.object({
 type Props = {
   onSubmit: (data: InputsPropertyEdit) => void;
   property: any;
+  categories: Category[];
+  prices: Prices[];
 }
 
-export const EditPropertyForm = ( { onSubmit, property }: Props) => {
+export const EditPropertyForm = ( { onSubmit, property, categories, prices }: Props) => {
 
-  const [categories, setCategories] = useState<Category[]>([]);
-  const [prices, setPrices] = useState<Prices[]>([]);
   const [infoCoordinates, setInfoCoordinates] = useState<InfoCoordinates>({} as InfoCoordinates);
   const [errorCoordinates, setErrorCoordinates] = useState(false);
   const [errorImage, setErrorImage] = useState(false);
   const [image, setImage] = useState<File | string>();
 
   const { register, handleSubmit, setValue, formState: { errors } } = useForm<InputsPropertyEdit>({ resolver: zodResolver(propertySchema), mode: 'onBlur'})
-
-  useEffect(() => {
-    async function getCategoriesAndPrices() {
-      const [categoriesData, pricesData]: [Category[], Prices[]] = await Promise.all([
-        categoriesService.getCategories(endPoints.categories.getAll),
-        pricesService.getPrices(endPoints.prices.getAll)
-      ])
-      setCategories(categoriesData);
-      setPrices(pricesData);
-    }
-
-    getCategoriesAndPrices();
-    console.log('INFO', infoCoordinates);
-  }, [infoCoordinates]);
 
   useEffect(() => {
     setValue('title', property.title)
@@ -86,7 +69,6 @@ export const EditPropertyForm = ( { onSubmit, property }: Props) => {
     setValue('garages', property.garages?.toString())
     setValue('bathrooms', property.bathrooms?.toString())
     setInfoCoordinates({lat: property.lat, lng: property.lng, street: property.street})
-    console.log('PROPERTY', property)
   }, [setValue, property])
 
   const submitPropertyForm: SubmitHandler<InputsPropertyEdit> = (data) => {
@@ -95,7 +77,7 @@ export const EditPropertyForm = ( { onSubmit, property }: Props) => {
       setErrorImage(true);
       return;
     }
-    console.log('IMAGE', image)
+    
     if(!image) {
       setErrorImage(true);
       return;

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import Swal from "sweetalert2";
 import endPoints from "@/services";
 import propertyService from '@/services/properties';
 import { useRouter } from "next/navigation";
@@ -35,6 +36,40 @@ export default function MyPropertiesPage() {
 
     getProperties()
   }, [router])
+
+  const deleteProperty = async(id: string) => {
+    Swal.fire({
+      title: 'Estas seguro de eliminar la propiedad?',
+      text: "No podras revertir esta accion!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, eliminar!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        propertyService.deleteProperty(endPoints.properties.delete(id))
+          .then(res => {
+            if(res?.status === 204) {
+              setProperties(properties.filter((property: any) => property.id !== id))
+              Swal.fire(
+                'Eliminado!',
+                'La propiedad ha sido eliminada.',
+                'success'
+              )
+            }
+          })
+          .catch(err => {
+            console.log(err)
+            Swal.fire(
+              'Error!',
+              'La propiedad no ha sido eliminada.',
+              'error'
+            )
+          })
+      }
+    })
+  }
 
   return (
     <div className="py-8">
@@ -81,9 +116,9 @@ export default function MyPropertiesPage() {
                         <Link href={`mis-propiedades/edit/${property.id}`} className='px-2 py-2 md:py-1 text-xs leading-5 font-semibold rounded bg-indigo-100 text-indigo-800'>
                           Editar
                         </Link>
-                        <Link href='#' className='px-2 py-2 md:py-1 text-xs leading-5 font-semibold rounded bg-red-100 text-red-800'>
+                        <button onClick={() => deleteProperty(property.id)} className='px-2 py-2 md:py-1 text-xs leading-5 font-semibold rounded bg-red-100 text-red-800'>
                           Eliminar
-                        </Link>
+                        </button>
                       </div>
                     </div>
                   </li>

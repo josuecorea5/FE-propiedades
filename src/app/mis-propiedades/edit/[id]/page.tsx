@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from 'react'
 import { EditPropertyForm, InputsPropertyEdit } from '@/components/EditPropertyForm'
+import categoriesService from "@/services/categories";
+import pricesService from "@/services/prices";
 import endPoints from '@/services'
 import propertyService from '@/services/properties'
 import { useRouter } from 'next/navigation'
@@ -9,11 +11,20 @@ import { useRouter } from 'next/navigation'
 
 export default function Page({ params }: { params: { id: string }}) {
 
+  type Category = {
+    id: number;
+    name: string;
+  }
+
+  type Prices = Category;
+
   const [property, setProperty] = useState<any>({})
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [prices, setPrices] = useState<Prices[]>([]);
 
   const router = useRouter()
-  useEffect(() => {
 
+  useEffect(() => {
     async function getProperty() {
       const res = await propertyService.getProperty(endPoints.properties.getOne(params.id))
       if(res.status === 200) {
@@ -25,6 +36,19 @@ export default function Page({ params }: { params: { id: string }}) {
     }
     getProperty()
   }, [params.id, router])
+
+  useEffect(() => {
+    async function getCategoriesAndPrices() {
+      const [categoriesData, pricesData]: [Category[], Prices[]] = await Promise.all([
+        categoriesService.getCategories(endPoints.categories.getAll),
+        pricesService.getPrices(endPoints.prices.getAll)
+      ])
+      setCategories(categoriesData);
+      setPrices(pricesData);
+    }
+
+    getCategoriesAndPrices();
+  }, []);
 
   const onSubmit = async (data: InputsPropertyEdit) => {
     const formData = new FormData();
@@ -46,7 +70,6 @@ export default function Page({ params }: { params: { id: string }}) {
     }else {
       console.log(await response?.json())
     }
-    
   }
 
   return (
@@ -54,7 +77,7 @@ export default function Page({ params }: { params: { id: string }}) {
       <h2 className="text-center text-2xl font-bold">
         Editar propiedad
       </h2>
-      <EditPropertyForm onSubmit={onSubmit} property={property} />
+      <EditPropertyForm onSubmit={onSubmit} property={property} categories={categories} prices={prices} />
     </div>
   )
 }

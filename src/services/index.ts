@@ -21,6 +21,7 @@ const endPoints = {
     create: `${API}/api/${VERSION}/properties`,
     getOne: (id: string) => `${API}/api/${VERSION}/properties/${id}`,
     update: (id: string) => `${API}/api/${VERSION}/properties/${id}`,
+    delete: (id: string) => `${API}/api/${VERSION}/properties/${id}`,
   }
 }
 

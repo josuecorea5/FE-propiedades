@@ -3,6 +3,7 @@
 import { CreatePropertyForm, InputsProperty } from "@/components/CreatePropertyForm";
 import endPoints from "@/services";
 import propertyService from '@/services/properties'
+import { useRouter } from "next/navigation";
 
 type Property = InputsProperty & {
   street: string;
@@ -11,6 +12,8 @@ type Property = InputsProperty & {
 }
 
 export default function CreatePropertyPage() {
+
+  const router = useRouter();
 
   const onSubmit = (data: InputsProperty) => {
     const formData = new FormData();
@@ -28,6 +31,7 @@ export default function CreatePropertyPage() {
 
     propertyService.createProperty(endPoints.properties.create, formData)
       .then((response) => {
+        router.push('/mis-propiedades')
         console.log(response);
       })
       .catch((error) => {
