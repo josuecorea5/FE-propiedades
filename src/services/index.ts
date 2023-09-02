@@ -20,8 +20,10 @@ const endPoints = {
     getAll: `${API}/api/${VERSION}/properties`,
     create: `${API}/api/${VERSION}/properties`,
     getOne: (id: string) => `${API}/api/${VERSION}/properties/${id}`,
+    getOnePublished: (id: string) => `${API}/api/${VERSION}/properties/published/${id}`,
     update: (id: string) => `${API}/api/${VERSION}/properties/${id}`,
     delete: (id: string) => `${API}/api/${VERSION}/properties/${id}`,
+    getPropertiesNews: `${API}/api/${VERSION}/properties/news`,
   }
 }
 

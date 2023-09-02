@@ -8,7 +8,7 @@ type InfoCoordinates = {
 }
 
 type Props = {
-  setInfoCoordinates: (data: InfoCoordinates) => void
+  setInfoCoordinates?: (data: InfoCoordinates) => void
   infoCoordinates: InfoCoordinates
 }
 
@@ -42,11 +42,13 @@ useEffect(() => {
             .then(data => {
               setShowMessage(true);
               setMessage(data.display_name);
-              setInfoCoordinates({
-                lat: latLng[0],
-                lng: latLng[1],
-                street: data.display_name,
-              })
+              if(setInfoCoordinates) {
+                setInfoCoordinates({
+                  lat: latLng[0],
+                  lng: latLng[1],
+                  street: data.display_name,
+                })
+              }
             })
             .catch(error => {
               console.log(error);

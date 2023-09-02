@@ -23,6 +23,18 @@ class PropertyService {
     return response;
   }
 
+  static async getPropertyPublished(url: string) {
+    const response = await fetch(url);
+    const data = await response.json();
+    return data;
+  }
+
+  static async getPropertiesNews(url: string) {
+    const response = await fetch(url);
+    const data = await response.json();
+    return data;
+  }
+
   static async createProperty(url: string, property: FormData) {
     console.log('FORMDATA', property.values())
     try {

@@ -6,11 +6,15 @@ import Swal from "sweetalert2";
 import endPoints from "@/services";
 import propertyService from '@/services/properties';
 import { useRouter } from "next/navigation";
+import { Pagination } from "@/components/Pagination";
 
 export default function MyPropertiesPage() {
   const router = useRouter();
   const [areProperties, setAreProperties] = useState(false);
   const [properties, setProperties] = useState([]);
+  const [totalPages, setTotalPages] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pagination, setPagination] = useState({} as any);
 
   useEffect(() => {
 
@@ -21,12 +25,20 @@ export default function MyPropertiesPage() {
         router.push('/auth/login')
       }else {
         const data = await res.json()
-        if(!data.length) {
+        console.log(data)
+        if(!data?.properties?.length) {
           setAreProperties(false)
         }else {
           console.log(data)
           setAreProperties(true)
-          setProperties(data)
+          setProperties(data?.properties)
+          setTotalPages(data?.totalPages)
+          setCurrentPage(data?.currentPage)
+          setPagination({
+            totalItems: data?.total,
+            offset: data?.offset,
+            limit: data?.limit
+          })
         }
       }
       } catch (error) {
@@ -36,6 +48,22 @@ export default function MyPropertiesPage() {
 
     getProperties()
   }, [router])
+
+  const setPage = async (page: number) => {
+
+    if(page < 1 || page > totalPages) return
+
+    const response = await propertyService.getProperties(`${endPoints.properties.getAll}?page=${page}`)
+    const data = await response.json();
+    setProperties(data?.properties)
+    setTotalPages(data?.totalPages)
+    setCurrentPage(data?.currentPage)
+    setPagination({
+      totalItems: data?.total,
+      offset: data?.offset,
+      limit: data?.limit
+    })
+  }
 
   const deleteProperty = async(id: string) => {
     Swal.fire({
@@ -99,7 +127,7 @@ export default function MyPropertiesPage() {
                         <img className="w-full block" src={property.image} alt={`Imagen de ${property.title}`} />
                       </div>
                       <div className="sm:w-2/4 md:w-3/6 lg:w-4/6 space-y-2">
-                        <a className="block text-2xl font-extrabold text-indigo-600 truncate" href="#">{property.title}</a>
+                        <Link className="block text-2xl font-extrabold text-indigo-600 truncate" href={`propiedades/${property.id}`}>{property.title}</Link>
                         <p className="text-sm text-black font-bold">{property.category.name}</p>
                         <p className="text-gray-500 font-bold flex items-center">
                           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
@@ -128,7 +156,16 @@ export default function MyPropertiesPage() {
           </div>
         )
       }
-
+      {
+        areProperties && (
+          <Pagination 
+            setPage={setPage} 
+            totalPages={totalPages} 
+            currentPage={currentPage}
+            {...pagination}
+          />
+        )
+      }
     </div>
   )
 }
