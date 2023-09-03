@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { Map, Marker, Overlay } from 'pigeon-maps';
 import { useState, useEffect } from 'react';
 
@@ -10,11 +11,12 @@ export const MainPigeonMap = ({  properties }: Props) => {
   const [center, setCenter] = useState([13.4785139, -88.2102891]);
   const [showMessage, setShowMessage] = useState(false);
   const [message, setMessage] = useState('');
+  const [infoProperty, setInfoProperty] = useState({} as any);
   
   return (
     <div>
       <Map 
-        height={550}
+        height={500}
         defaultCenter={[width[0], width[1]]} 
         defaultZoom={11}
         center={[center[0], center[1]]}
@@ -30,13 +32,11 @@ export const MainPigeonMap = ({  properties }: Props) => {
                   key={property?.id}
                   width={50} 
                   anchor={[Number(property?.lat), Number(property?.lng)]} 
-                  onMouseOver={() => {
+                  onClick={() => {
                     setMessage(property?.title);
                     setWidth([Number(property?.lat), Number(property?.lng)]);
-                    setShowMessage(true);
-                  }}
-                  onMouseOut={() => {
-                    setShowMessage(false);
+                    setShowMessage(!showMessage);
+                    setInfoProperty(property);
                   }}
                 />
             )
@@ -46,13 +46,14 @@ export const MainPigeonMap = ({  properties }: Props) => {
 
         {showMessage && (
           <Overlay anchor={[width[0], width[1]]}>
-            <div className="bg-white rounded-lg shadow-xl p-4 max-w-sm w-full mx-auto">
-              {message}
+            <div className="bg-white rounded-lg space-y-2 shadow-xl p-4 w-full mx-auto max-w-xs flex flex-col flex-1">
+              <Link className='text-xl hover:text-indigo-600 hover:underline' href={`/propiedades/${infoProperty?.id}`}>{infoProperty?.title}</Link>
+              <img src={infoProperty?.image} alt={infoProperty?.title} />
+              <p className='text-gray-600 font-bold'>${infoProperty?.price?.name}</p>
             </div>
           </Overlay>
         )}
       </Map>
-      <p>{message}</p>
     </div>
   )
 }

@@ -56,7 +56,7 @@ export const CreatePropertyForm = ( { onSubmit }: Props) => {
   const [categories, setCategories] = useState<Category[]>([]);
   const [prices, setPrices] = useState<Prices[]>([]);
   const [infoCoordinates, setInfoCoordinates] = useState<InfoCoordinates>({} as InfoCoordinates);
-  const [image, setImage] = useState<File>();
+  const [image, setImage] = useState<File | string>();
   const [errorCoordinates, setErrorCoordinates] = useState(false);
   const [errorImage, setErrorImage] = useState(false);
 
@@ -73,7 +73,7 @@ export const CreatePropertyForm = ( { onSubmit }: Props) => {
     }
 
     getCategoriesAndPrices();
-    console.log('INFO', infoCoordinates);
+
   }, [infoCoordinates]);
 
   const submitPropertyForm: SubmitHandler<InputsProperty> = (data) => {
