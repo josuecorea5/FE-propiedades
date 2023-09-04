@@ -11,6 +11,11 @@ export default function Home() {
   const [categories, setCategories] = useState([])
   const [prices, setPrices] = useState([])
   const [originalProperties, setOriginalProperties] = useState([])
+  const [filterTypes, setFilterTypes] = useState({
+    category: '',
+    price: ''
+  })
+
   useEffect(() => {
     async function getProperties() {
       const res = await propertiesService.getPropertiesNews(endPoints.properties.getPropertiesNews);
@@ -32,11 +37,13 @@ export default function Home() {
     getPropertiesAndPrices()
   }, [])
 
-  const filterProperties = (filter: string) => {
-    if(filter === '') return setProperties(originalProperties);
-    const filteredProperties = originalProperties.filter((property:any) => property?.category?.name === filter)
+  useEffect(() => {
+    const filteredProperties = originalProperties
+      .filter((property: any) => filterTypes.category ? property.category.name === filterTypes.category : property)
+      .filter((property: any) => filterTypes.price ? property.price.name === filterTypes.price : property)
     setProperties(filteredProperties)
-  }
+  }, [filterTypes, originalProperties])
+
 
   return (
     <div className="py-5 space-y-2">
@@ -50,7 +57,7 @@ export default function Home() {
           <select 
             id="categories" 
             className="bg-white w-full px-3 py-2 border border-gray-300 rounded-md shad flex-1"
-            onChange={(e: ChangeEvent<HTMLSelectElement>) => filterProperties(e.target.value)}
+            onChange={(e: ChangeEvent<HTMLSelectElement>) => setFilterTypes({ ...filterTypes, category: e.target.value})}
             >
             <option value="">Seleccionar</option>
             {
@@ -64,7 +71,11 @@ export default function Home() {
         </div>
         <div className="w-full md:w-auto flex items-center gap-2">
           <label htmlFor="prices" className="text-sm w-24 uppercase text-gray-500 font-bold">Precios</label>
-          <select id="prices" className="bg-white w-full px-3 py-2 border border-gray-300 rounded-md shad flex-1">
+          <select 
+            id="prices" 
+            className="bg-white w-full px-3 py-2 border border-gray-300 rounded-md shad flex-1"
+            onChange={(e: ChangeEvent<HTMLSelectElement>) => setFilterTypes({...filterTypes, price: e.target.value}) }
+          >
             <option value="">Seleccionar</option>
             {
               prices.map((price:any) => (
