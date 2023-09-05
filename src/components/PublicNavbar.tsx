@@ -1,4 +1,5 @@
 import Link from "next/link"
+import { SearchInput } from "./SearchInput"
 
 export const PublicNavbar = () => {
   return (
@@ -26,12 +27,7 @@ export const PublicNavbar = () => {
             <Link className="text-sm font-bold uppercase text-white" href='/categorias/4'>Terrenos</Link>
             <Link className="text-sm font-bold uppercase text-white" href='/categorias/5'>Cabañas</Link>
          </nav>
-         <div className="flex gap-3 items-center">
-          <input name="search" type="text" className="p-2 rounded-lg shadow text-sm" placeholder="Buscar propiedad" />
-          <button className="bg-indigo-800 hover:bg-indigo-500 rounded-lg text-white font-bold p-2 cursor-pointer text-sm">
-            Buscar
-          </button>
-         </div>
+         <SearchInput />
         </div>
       </div>
     </>

@@ -41,6 +41,11 @@ class PropertyService {
     return data;
   }
 
+  static async searchProperties(url: string) {
+    const response = await fetch(url);
+    return response;
+  }
+
   static async createProperty(url: string, property: FormData) {
     console.log('FORMDATA', property.values())
     try {
