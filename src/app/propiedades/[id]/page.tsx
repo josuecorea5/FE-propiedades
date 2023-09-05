@@ -5,6 +5,7 @@ import propertyService from '@/services/properties';
 import { PigeonMap } from '@/components/PigeonMap';
 import { useAuth } from '@/hooks/useAuth';
 import Link from 'next/link';
+import { ContactForm } from '@/components/ContactForm';
 
 export default function Page({ params }: { params: { id: string }}) {
   const [property, setProperty] = useState<any>({})
@@ -82,14 +83,14 @@ export default function Page({ params }: { params: { id: string }}) {
             </div>
           </div>
         </div>
-        <div className='md:w-1/3 flex flex-col'>
+        <div className='md:w-1/3 flex flex-col gap-10'>
           <h3 className='text-center py-10 leading-6 text-2xl font-bold text-gray-900'>Ubicación</h3>
           <div className='h-96'>
             <PigeonMap infoCoordinates={{lat: property.lat, lng: property.lng, street: property.street}} />
           </div>
            {
             (!showFormContact && !isOwner) && (
-              <div className='mt-24 flex
+              <div className='mt-20 flex
               flex-col gap-4 items-center'>
                 <p>Necesitas estar logueado para contactar con este vendedor</p>
                 <Link className='bg-indigo-600 text-white px-6 py-3 rounded hover:bg-indigo-700' href='/auth/login'>Login</Link>
@@ -98,8 +99,15 @@ export default function Page({ params }: { params: { id: string }}) {
            }
            {
             isOwner && (
-              <div className='mt-24 text-center text-xl bg-indigo-600 text-white px-4 py-2'>
+              <div className='mt-20 text-center text-xl bg-indigo-600 text-white px-4 py-2'>
                 <p>Este es tu anuncio</p>
+              </div>
+            )
+           }
+           {
+            showFormContact && (
+              <div className='mt-20'>
+                <ContactForm />
               </div>
             )
            }
