@@ -12,6 +12,7 @@ const endPoints = {
   },
   categories: {
     getAll: `${API}/api/${VERSION}/categories`,
+    getPropertiesByCategory: (id: string) => `${API}/api/${VERSION}/categories/${id}/properties`,
   },
   prices: {
     getAll: `${API}/api/${VERSION}/prices`,
