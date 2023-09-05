@@ -21,7 +21,7 @@ export const Navbar = () => {
           </h1>
         </Link>
         <nav className="my-5 text-sm md:flex md:items-center md:gap-3 font-bold text-white">
-          <Link href='#'>Mis Propiedades</Link>
+          <Link href='/mis-propiedades'>Mis Propiedades</Link>
           <Link href='#'>Mi Perfil</Link>
           <button onClick={onLogOut} className="bg-indigo-800 py-2 px-6 rounded-lg hover:bg-indigo-950">Cerrar sesión</button>
         </nav>

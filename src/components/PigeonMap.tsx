@@ -28,7 +28,7 @@ useEffect(() => {
 }, [infoCoordinates])
   
   return (
-    <div>
+    <div className='shadow rounded'>
       <Map 
         height={400} 
         defaultCenter={[width[0], width[1]]} 
@@ -69,7 +69,7 @@ useEffect(() => {
           </Overlay>
         )}
       </Map>
-      <p>{message}</p>
+      <p className='px-3 py-1'>{message}</p>
     </div>
   )
 }

@@ -28,7 +28,7 @@ export default function LoginPage() {
           setShowErrorMessage(res.message);
         }else {
           login(res.token);
-          router.push('/mis-propiedades');
+          router.push('/');
         }
       })
       .catch(err => console.log(err))
