@@ -35,6 +35,12 @@ class PropertyService {
     return data;
   }
 
+  static async getThreeLatestProperties(url: string) {
+    const response = await fetch(url);
+    const data = await response.json();
+    return data;
+  }
+
   static async createProperty(url: string, property: FormData) {
     console.log('FORMDATA', property.values())
     try {

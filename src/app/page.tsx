@@ -5,6 +5,7 @@ import propertiesService from "@/services/properties"
 import categoriesService from "@/services/categories"
 import pricesService from "@/services/prices"
 import { MainPigeonMap } from "@/components/MainPigeonMap"
+import { CardProperty } from "@/components/CardProperty"
 
 export default function Home() {
   const [properties, setProperties] = useState([])
@@ -15,6 +16,8 @@ export default function Home() {
     category: '',
     price: ''
   })
+
+  const [newPropertiesByDate, setNewPropertiesByDate] = useState([]);
 
   useEffect(() => {
     async function getProperties() {
@@ -27,11 +30,13 @@ export default function Home() {
 
   useEffect(() => {
     async function getPropertiesAndPrices() {
-      const [categories, prices] = await Promise.all([
+      const [categories, prices, newProperties] = await Promise.all([
         categoriesService.getCategories(endPoints.categories.getAll),
-        pricesService.getPrices(endPoints.prices.getAll)
+        pricesService.getPrices(endPoints.prices.getAll),
+        propertiesService.getThreeLatestProperties(endPoints.properties.getTopThreePropertiesByCategory),
       ])
       setCategories(categories)
+      setNewPropertiesByDate(newProperties)
       setPrices(prices)
     }
     getPropertiesAndPrices()
@@ -50,7 +55,7 @@ export default function Home() {
       <h1 className="text-center text-4xl font-extrabold">
         Ubicación en el mapa
       </h1>
-      <div className="flex flex-col md:flex-row items-center py-10 gap-4">
+      <div className="flex flex-col md:flex-row items-center py-10 px-12 gap-4">
         <h2 className="text-sm text-gray-600 font-bold">Filtrar propiedades</h2>
         <div className="w-full md:w-auto flex items-center gap-2">
           <label htmlFor="categories" className="text-sm w-24 uppercase text-gray-500 font-bold">Categorias</label>
@@ -88,6 +93,16 @@ export default function Home() {
         </div>
       </div>
       <MainPigeonMap properties={properties} />
+      <section>
+        <h2 className="text-center text-4xl font-extrabold pt-10">Propiedades recientes</h2>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 mt-14">
+          {
+            newPropertiesByDate.map((property: any) => (
+              <CardProperty key={property?.id} {...property} />
+            ))
+          }
+        </div>
+      </section>
     </div>
   )
 }

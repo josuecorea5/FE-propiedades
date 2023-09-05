@@ -24,6 +24,7 @@ const endPoints = {
     update: (id: string) => `${API}/api/${VERSION}/properties/${id}`,
     delete: (id: string) => `${API}/api/${VERSION}/properties/${id}`,
     getPropertiesNews: `${API}/api/${VERSION}/properties/news`,
+    getTopThreePropertiesByCategory: `${API}/api/${VERSION}/properties/latest`,
   }
 }
 

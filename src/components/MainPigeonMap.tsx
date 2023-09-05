@@ -14,7 +14,7 @@ export const MainPigeonMap = ({  properties }: Props) => {
   const [infoProperty, setInfoProperty] = useState({} as any);
   
   return (
-    <div>
+    <div className='lg:px-12 lg:py-6 px-3 py-2'>
       <Map 
         height={500}
         defaultCenter={[width[0], width[1]]} 
@@ -49,7 +49,7 @@ export const MainPigeonMap = ({  properties }: Props) => {
             <div className="bg-white rounded-lg space-y-2 shadow-xl p-4 w-full mx-auto max-w-xs flex flex-col flex-1">
               <Link className='text-xl hover:text-indigo-600 hover:underline' href={`/propiedades/${infoProperty?.id}`}>{infoProperty?.title}</Link>
               <img src={infoProperty?.image} alt={infoProperty?.title} />
-              <p className='text-gray-600 font-bold'>${infoProperty?.price?.name}</p>
+              <p className='text-gray-600 font-bold'>{infoProperty?.price?.name}</p>
             </div>
           </Overlay>
         )}
