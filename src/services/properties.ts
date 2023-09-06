@@ -46,8 +46,31 @@ class PropertyService {
     return response;
   }
 
+  static async sendMessageToSeller(url: string, message: string) {
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${this.token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ message })
+    })
+    const data = await response.json();
+    return data;
+  }
+
+  static async getMessagesOfProperty(url: string) {
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${this.token}`
+      }
+    })
+    const data = await response.json();
+    return data;
+  }
+
   static async createProperty(url: string, property: FormData) {
-    console.log('FORMDATA', property.values())
     try {
       const response = await fetch(url, {
         method: 'POST',

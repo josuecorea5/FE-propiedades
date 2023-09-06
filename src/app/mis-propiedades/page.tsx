@@ -65,6 +65,19 @@ export default function MyPropertiesPage() {
     })
   }
 
+  const changePublishedValue = (id: string) => {
+
+    const findIndexProperty = properties.findIndex((property: any) => property?.id === id)
+
+    const changePublishedProperty = properties.map((property: any, index) => {
+      if(index === findIndexProperty) {
+        property.published = !property.published
+      }
+      return property
+    })
+    setProperties(changePublishedProperty as any)
+  }
+
   const deleteProperty = async(id: string) => {
     Swal.fire({
       title: 'Estas seguro de eliminar la propiedad?',
@@ -136,12 +149,15 @@ export default function MyPropertiesPage() {
                           </svg>
                           ${property.price.name}
                         </p>
+                        <Link href={`/mis-propiedades/mensajes/${property?.id}`} className="text-sm text-gray-600">{property?.messages?.length} mensajes</Link>
                       </div>
-                      <div className="sm:w-1/4 md:w-2/6 lg:flex-1 flex flex-col lg:flex-row gap-2">
-                        <button className={`px-2 py-2 md:py-1 text-xs leading-5 font-semibold rounded ${property.published ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+                      <div className="sm:w-1/4 md:w-2/6 lg:w-1/6 flex flex-col 2xl:flex-row gap-2">
+                        <button 
+                          onClick={() => changePublishedValue(property?.id)}
+                          className={`px-2 py-2 md:py-1 text-xs leading-5 font-semibold rounded ${property.published ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
                           {property.published ? 'Publicado' : 'No publicado'}
                         </button>
-                        <Link href={`mis-propiedades/edit/${property.id}`} className='px-2 py-2 md:py-1 text-xs leading-5 font-semibold rounded bg-indigo-100 text-indigo-800'>
+                        <Link href={`mis-propiedades/edit/${property.id}`} className='px-2 py-2 md:py-1 text-xs leading-5 font-semibold rounded bg-indigo-100 text-indigo-800 text-center'>
                           Editar
                         </Link>
                         <button onClick={() => deleteProperty(property.id)} className='px-2 py-2 md:py-1 text-xs leading-5 font-semibold rounded bg-red-100 text-red-800'>

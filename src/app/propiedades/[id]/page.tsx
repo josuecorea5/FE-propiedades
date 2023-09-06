@@ -12,6 +12,8 @@ export default function Page({ params }: { params: { id: string }}) {
   const { isAuthenticated } = useAuth();
   const [showFormContact, setShowFormContact] = useState<boolean>(false);
   const [isOwner, setIsOwner] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>('');
+  const [successMessage, setSuccessMessage] = useState<string>('');
   useEffect(() => {
     propertyService.getPropertyPublished(endPoints.properties.getOnePublished(params.id))
       .then(res => {
@@ -34,6 +36,22 @@ export default function Page({ params }: { params: { id: string }}) {
         })
     }
   }, [isAuthenticated, params.id])
+
+  const onSubmit = (message: string) => {
+    propertyService.sendMessageToSeller(endPoints.properties.sendMessageToSeller(params.id), message)
+      .then(res => {
+        if(res?.errors) {
+          setErrorMessage(res?.errors[1]?.msg)
+        }else {
+          setSuccessMessage(res?.message);
+          setErrorMessage('');
+          setShowFormContact(false);
+        }
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
 
 
   return (
@@ -89,7 +107,7 @@ export default function Page({ params }: { params: { id: string }}) {
             <PigeonMap infoCoordinates={{lat: property.lat, lng: property.lng, street: property.street}} />
           </div>
            {
-            (!showFormContact && !isOwner) && (
+            (!showFormContact && !isOwner && !successMessage) && (
               <div className='mt-20 flex
               flex-col gap-4 items-center'>
                 <p>Necesitas estar logueado para contactar con este vendedor</p>
@@ -107,7 +125,14 @@ export default function Page({ params }: { params: { id: string }}) {
            {
             showFormContact && (
               <div className='mt-20'>
-                <ContactForm />
+                <ContactForm onSubmit={onSubmit} errorMessage={errorMessage} />
+              </div>
+            )
+           }
+           {
+            successMessage && (
+              <div className='mt-20'>
+                <p className='p-2 text-center bg-green-100 text-green-400 font-bold'>{successMessage}</p>
               </div>
             )
            }
