@@ -2,8 +2,8 @@ import { Map, Marker, Overlay } from 'pigeon-maps';
 import { useState, useEffect } from 'react';
 
 type InfoCoordinates = {
-  lat: number;
-  lng: number;
+  lat: number | string;
+  lng: number | string;
   street: string;
 }
 

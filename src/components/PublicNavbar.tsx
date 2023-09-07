@@ -1,7 +1,13 @@
+'use client'
 import Link from "next/link"
 import { SearchInput } from "./SearchInput"
+import { useState } from "react"
 
 export const PublicNavbar = () => {
+  const [showMenu, setShowMenu] = useState(false)
+  const toggleMenu = () => {
+    setShowMenu(!showMenu)
+  }
   return (
     <>
       <header className="bg-indigo-600 px-4 py-1">
@@ -16,6 +22,29 @@ export const PublicNavbar = () => {
             <Link href='/auth/register'>Crear cuenta</Link>
             <Link href='/auth/login'>Login</Link>
           </nav>
+        <div className="md:hidden p-4">
+          <svg 
+              xmlns="http://www.w3.org/2000/svg" 
+              fill="none" 
+              viewBox="0 0 24 24" 
+              strokeWidth="1.5" 
+              stroke="currentColor" 
+              className={`${showMenu ? 'fixed right-8' : 'relative'} w-8 h-8 cursor-pointer z-30 text-white`}
+              onClick={toggleMenu}
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+          </svg>
+          {
+            showMenu && (
+              <div className="fixed grid place-content-center z-20 top-0 right-0 w-screen h-screen bg-indigo-600 ease-linear overflow-hidden">
+                <nav className="my-5 text-lg font-bold flex flex-col gap-4 items-center text-white">
+                  <Link onClick={toggleMenu} href='/auth/register'>Crear cuenta</Link>
+                  <Link onClick={toggleMenu} href='/auth/login'>Login</Link>
+                </nav>
+              </div>
+            )
+          }
+        </div>
         </div>
       </header>
       <div className="bg-indigo-700  px-4 py-4 items-center hidden lg:block">

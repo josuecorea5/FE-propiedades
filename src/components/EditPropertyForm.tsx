@@ -4,6 +4,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { z } from 'zod';
 import { zodResolver } from "@hookform/resolvers/zod";
 import { DragAndDropImage } from "./DragAndDropImage";
+import { Property } from "@/types";
 
 const numberOfOptions = Array.from(Array(5).keys())
 
@@ -13,8 +14,8 @@ type Category = {
 }
 
 type InfoCoordinates = {
-  lat: number;
-  lng: number;
+  lat: number | string;
+  lng: number | string;
   street: string;
 }
 
@@ -29,8 +30,8 @@ export type InputsPropertyEdit = {
   garages: string;
   bathrooms: string;
   street: string;
-  lat: number;
-  lng: number;
+  lat: number | string;
+  lng: number | string;
   image: File
 }
 
@@ -46,7 +47,7 @@ const propertySchema = z.object({
 
 type Props = {
   onSubmit: (data: InputsPropertyEdit) => void;
-  property: any;
+  property: Property;
   categories: Category[];
   prices: Prices[];
 }

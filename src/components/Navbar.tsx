@@ -27,7 +27,7 @@ export const Navbar = () => {
             <span className="font-normal">Raices</span>
           </h1>
         </Link>
-        <nav className="sm:hidden my-5 text-sm flex items-center justify-between md:flex md:items-center md:gap-3 font-bold text-white">
+        <nav className="hidden my-5 text-sm items-center justify-between md:flex md:items-center md:gap-3 font-bold text-white">
           <Link href='/mis-propiedades'>Mis Propiedades</Link>
           <button onClick={onLogOut} className="bg-indigo-800 py-2 px-6 rounded-lg hover:bg-indigo-950">Cerrar sesión</button>
         </nav>
@@ -38,14 +38,14 @@ export const Navbar = () => {
             viewBox="0 0 24 24" 
             strokeWidth="1.5" 
             stroke="currentColor" 
-            className="w-8 h-8 cursor-pointer z-30 text-white relative"
+            className={`${showMenu ? 'fixed right-8' : 'relative'} w-8 h-8 cursor-pointer z-30 text-white`}
             onClick={toggleMenu}
           >
             <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
           </svg>
           {
             showMenu && (
-            <div className="absolute grid place-content-center z-20 top-0 right-0 w-screen h-screen bg-indigo-600 ease-linear">
+            <div className="fixed grid place-content-center z-20 top-0 right-0 w-screen h-screen bg-indigo-600 ease-linear">
               <nav className="my-5 text-sm font-bold flex flex-col gap-4 items-center text-white">
                 <Link onClick={toggleMenu} href='/mis-propiedades'>Mis Propiedades</Link>
                 <button onClick={onLogOut} className="bg-indigo-800 py-2 px-6 rounded-lg hover:bg-indigo-950">Cerrar sesión</button>

@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from "react";
-import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import { InputsLogin, LoginForm } from "@/components/LoginForm";
 import endPoints from "@/services";

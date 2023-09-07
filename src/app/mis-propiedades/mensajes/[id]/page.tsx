@@ -5,9 +5,10 @@ import endPoints from '@/services';
 import propertyService from '@/services/properties';
 import { useRouter } from 'next/navigation';
 import { formatDate } from '@/helpers/formatDate';
+import { Message } from '@/types';
 
 export default function Page({ params }: { params: { id: string}}) {
-  const [messages, setMessages] = useState([])
+  const [messages, setMessages] = useState<Message[]>([])
   const router = useRouter()
 
   useEffect(() => {
@@ -17,6 +18,7 @@ export default function Page({ params }: { params: { id: string}}) {
           router.push('/mis-propiedades')
         }else {
           setMessages(res)
+          console.log(res)
         }
       })
   }, [params.id, router])
@@ -37,13 +39,13 @@ export default function Page({ params }: { params: { id: string}}) {
           (
             <ul>
               {
-                messages.map((message: any) => (
+                messages.map((message: Message) => (
                   <li key={message?.id} className='border-gray-200 border-b p-5 space-y-1'>
                     <p className='font-bold text-gray-800'>
-                      Email: <span className='font-normal'>{message?.user.email}</span>
+                      Email: <span className='font-normal'>{message?.user?.email}</span>
                     </p>
                     <p className='font-bold text-gray-800'>
-                      Nombre: <span className='font-normal'>{message?.user.name}</span>
+                      Nombre: <span className='font-normal'>{message?.user?.name}</span>
                     </p>
                     <p className='font-bold text-gray-800'>
                       Mensaje: <span className='font-normal'>{message?.message}</span>

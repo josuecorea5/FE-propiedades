@@ -5,12 +5,6 @@ import endPoints from "@/services";
 import propertyService from '@/services/properties'
 import { useRouter } from "next/navigation";
 
-type Property = InputsProperty & {
-  street: string;
-  lat: number;
-  lng: number;
-}
-
 export default function CreatePropertyPage() {
 
   const router = useRouter();

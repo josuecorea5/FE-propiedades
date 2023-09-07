@@ -7,17 +7,18 @@ import endPoints from "@/services";
 import propertyService from '@/services/properties';
 import { useRouter } from "next/navigation";
 import { Pagination } from "@/components/Pagination";
+import { PaginationType, Property } from "@/types";
+import Image from "next/image";
 
 export default function MyPropertiesPage() {
   const router = useRouter();
   const [areProperties, setAreProperties] = useState(false);
-  const [properties, setProperties] = useState([]);
+  const [properties, setProperties] = useState<Property[]>([]);
   const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
-  const [pagination, setPagination] = useState({} as any);
+  const [pagination, setPagination] = useState<PaginationType>({} as PaginationType);
 
   useEffect(() => {
-
     async function getProperties() {
       try {
         const res = await propertyService.getProperties(endPoints.properties.getAll)
@@ -25,11 +26,9 @@ export default function MyPropertiesPage() {
         router.push('/auth/login')
       }else {
         const data = await res.json()
-        console.log(data)
         if(!data?.properties?.length) {
           setAreProperties(false)
         }else {
-          console.log(data)
           setAreProperties(true)
           setProperties(data?.properties)
           setTotalPages(data?.totalPages)
@@ -69,8 +68,8 @@ export default function MyPropertiesPage() {
     propertyService.updatePropertyPublished(endPoints.properties.updatePropertyPublished(id))
       .then(res => {
         if(res?.updated) {
-          setProperties(prevProperties => prevProperties.map((property: any) => property?.id === id ? 
-          {...property, published: !property.published} : property) as any)
+          setProperties(prevProperties => prevProperties.map((property: Property) => property?.id === id ? 
+          {...property, published: !property.published} : property))
         }
       })
       .catch(err => console.log(err))
@@ -90,7 +89,7 @@ export default function MyPropertiesPage() {
         propertyService.deleteProperty(endPoints.properties.delete(id))
           .then(res => {
             if(res?.status === 204) {
-              setProperties(properties.filter((property: any) => property.id !== id))
+              setProperties(properties.filter((property: Property) => property.id !== id))
               Swal.fire(
                 'Eliminado!',
                 'La propiedad ha sido eliminada.',
@@ -131,11 +130,11 @@ export default function MyPropertiesPage() {
           <div className="bg-white shadow rounded-lg">
             <ul className="divide-y divide-gray-200">
               {
-                properties.map((property: any) => (
+                properties.map((property: Property) => (
                   <li key={property.id}>
                     <div className="p-6 w-full flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-8 gap-4">
                       <div className="sm:w-1/4 md:w-1/6">
-                        <img className="w-full block" src={property.image} alt={`Imagen de ${property.title}`} />
+                        <Image width={500} height={500} className="w-full block" src={property.image} alt={`Imagen de ${property.title}`} />
                       </div>
                       <div className="sm:w-2/4 md:w-3/6 lg:w-4/6 space-y-2">
                         <Link className="block text-2xl font-extrabold text-indigo-600 truncate" href={`propiedades/${property.id}`}>{property.title}</Link>

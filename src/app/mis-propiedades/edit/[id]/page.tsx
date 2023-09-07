@@ -7,6 +7,7 @@ import pricesService from "@/services/prices";
 import endPoints from '@/services'
 import propertyService from '@/services/properties'
 import { useRouter } from 'next/navigation'
+import { Property } from '@/types';
 
 
 export default function Page({ params }: { params: { id: string }}) {
@@ -18,7 +19,7 @@ export default function Page({ params }: { params: { id: string }}) {
 
   type Prices = Category;
 
-  const [property, setProperty] = useState<any>({})
+  const [property, setProperty] = useState<Property>({} as Property)
   const [categories, setCategories] = useState<Category[]>([]);
   const [prices, setPrices] = useState<Prices[]>([]);
 
