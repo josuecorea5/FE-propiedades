@@ -6,6 +6,7 @@ import { PigeonMap } from '@/components/PigeonMap';
 import { useAuth } from '@/hooks/useAuth';
 import Link from 'next/link';
 import { ContactForm } from '@/components/ContactForm';
+import { useRouter } from 'next/navigation';
 
 export default function Page({ params }: { params: { id: string }}) {
   const [property, setProperty] = useState<any>({})
@@ -14,13 +15,18 @@ export default function Page({ params }: { params: { id: string }}) {
   const [isOwner, setIsOwner] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [successMessage, setSuccessMessage] = useState<string>('');
+  const router = useRouter();
   useEffect(() => {
     propertyService.getPropertyPublished(endPoints.properties.getOnePublished(params.id))
       .then(res => {
-        console.log(res)
-        setProperty(res)
+        if(!res.error) {
+          console.log(res)
+          setProperty(res)
+        }else {
+         router.push('/mis-propiedades')
+        }
       })
-  }, [params.id])
+  }, [params.id, router])
 
   useEffect(() => {
     if(!isAuthenticated) {

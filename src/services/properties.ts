@@ -101,6 +101,21 @@ class PropertyService {
     }
   }
 
+  static async updatePropertyPublished(url: string) {
+    try {
+      const response = await fetch(url, {
+        method: 'PATCH',
+        headers: {
+          'Authorization': `Bearer ${this.token}`
+        }
+      })
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   static async deleteProperty(url: string) {
     try {
       const response = await fetch(url, {

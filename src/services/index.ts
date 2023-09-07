@@ -29,6 +29,7 @@ const endPoints = {
     searchProperties: (title: string) => `${API}/api/${VERSION}/properties/search?title=${title}`,
     sendMessageToSeller: (id: string) => `${API}/api/${VERSION}/properties/${id}/messages`,
     getMessagesOfProperty: (id: string) => `${API}/api/${VERSION}/properties/${id}/messages`,
+    updatePropertyPublished: (id: string) => `${API}/api/${VERSION}/properties/${id}/publish`,
   }
 }
 

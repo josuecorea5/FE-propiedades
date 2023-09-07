@@ -66,16 +66,14 @@ export default function MyPropertiesPage() {
   }
 
   const changePublishedValue = (id: string) => {
-
-    const findIndexProperty = properties.findIndex((property: any) => property?.id === id)
-
-    const changePublishedProperty = properties.map((property: any, index) => {
-      if(index === findIndexProperty) {
-        property.published = !property.published
-      }
-      return property
-    })
-    setProperties(changePublishedProperty as any)
+    propertyService.updatePropertyPublished(endPoints.properties.updatePropertyPublished(id))
+      .then(res => {
+        if(res?.updated) {
+          setProperties(prevProperties => prevProperties.map((property: any) => property?.id === id ? 
+          {...property, published: !property.published} : property) as any)
+        }
+      })
+      .catch(err => console.log(err))
   }
 
   const deleteProperty = async(id: string) => {
