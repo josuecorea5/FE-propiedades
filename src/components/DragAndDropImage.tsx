@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import React, { useState, useRef, useEffect } from 'react'
 
 type Image = {
@@ -92,7 +93,7 @@ export const DragAndDropImage = ({ setImage, image }: Props) => {
         images.url && (
           <div className='relative'>
             <span onClick={() => deleteImage()} className='absolute text-red-700 text-base right-0 cursor-pointer bg-white rounded-full w-5 h-5 flex justify-center items-center'>&times;</span>
-            <img className='w-28 h-28' src={images.url} alt='Imagen de propiedad' />
+            <Image width={500} height={500} className='w-28 h-28' src={images.url} alt='Imagen de propiedad' />
          </div>
         )
       }

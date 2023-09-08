@@ -7,6 +7,7 @@ import { useAuth } from '@/hooks/useAuth';
 import Link from 'next/link';
 import { ContactForm } from '@/components/ContactForm';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 
 export default function Page({ params }: { params: { id: string }}) {
   const [property, setProperty] = useState<any>({})
@@ -73,7 +74,7 @@ export default function Page({ params }: { params: { id: string }}) {
       </div>
       <div className='mt-5 lg:flex md:gap-4'>
         <div className='md:w-3/3 lg:w-2/3 bg-white shadow rounded-lg'>
-          <img src={property.image} alt={`Imagen de la propiedad ${property.title}`} />
+          <Image width={1000} height={1000} src={property.image} alt={`Imagen de la propiedad ${property.title}`} />
           <div className='px-5 py-10 space-y-5'>
             <p>{property.description}</p>
             <h2 className='text-2xl leading-6 font-bold text-gray-900'>
