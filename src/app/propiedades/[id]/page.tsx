@@ -71,8 +71,8 @@ export default function Page({ params }: { params: { id: string }}) {
           <span className='font-normal'> {property?.category?.name}</span>
         </a>
       </div>
-      <div className='mt-5 md:flex md:gap-4'>
-        <div className='md:w-2/3 bg-white shadow rounded-lg'>
+      <div className='mt-5 lg:flex md:gap-4'>
+        <div className='md:w-3/3 lg:w-2/3 bg-white shadow rounded-lg'>
           <img src={property.image} alt={`Imagen de la propiedad ${property.title}`} />
           <div className='px-5 py-10 space-y-5'>
             <p>{property.description}</p>
@@ -107,7 +107,7 @@ export default function Page({ params }: { params: { id: string }}) {
             </div>
           </div>
         </div>
-        <div className='md:w-1/3 flex flex-col gap-10'>
+        <div className='md:w-3/3 lg:w-1/3 flex flex-col gap-10'>
           <h3 className='text-center py-10 leading-6 text-2xl font-bold text-gray-900'>Ubicación</h3>
           <div className='h-96'>
             <PigeonMap infoCoordinates={{lat: property.lat, lng: property.lng, street: property.street}} />

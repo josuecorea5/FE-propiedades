@@ -51,7 +51,7 @@ export default function RegisterPage() {
             Bienes
             <span className="font-normal">Raices</span>
           </h1>
-          <p className="text-2xl text-center font-bold">Cuenta creada con correctamente</p>
+          <p className="text-2xl text-center font-bold">Cuenta creada correctamente</p>
           <p className="text-lg text-center">Hemos enviado un email para que puedas confirmar tu cuenta</p>
         </div>
       )}
