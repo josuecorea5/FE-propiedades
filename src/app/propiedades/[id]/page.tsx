@@ -21,7 +21,6 @@ export default function Page({ params }: { params: { id: string }}) {
     propertyService.getPropertyPublished(endPoints.properties.getOnePublished(params.id))
       .then(res => {
         if(!res.error) {
-          console.log(res)
           setProperty(res)
         }else {
          router.push('/mis-propiedades')

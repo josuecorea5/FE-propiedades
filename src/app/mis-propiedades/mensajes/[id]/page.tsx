@@ -18,7 +18,6 @@ export default function Page({ params }: { params: { id: string}}) {
           router.push('/mis-propiedades')
         }else {
           setMessages(res)
-          console.log(res)
         }
       })
   }, [params.id, router])

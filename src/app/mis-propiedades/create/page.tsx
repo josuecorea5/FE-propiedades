@@ -26,7 +26,6 @@ export default function CreatePropertyPage() {
     propertyService.createProperty(endPoints.properties.create, formData)
       .then((response) => {
         router.push('/mis-propiedades')
-        console.log(response);
       })
       .catch((error) => {
         console.log(error);

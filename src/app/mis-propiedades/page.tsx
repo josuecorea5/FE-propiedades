@@ -98,7 +98,6 @@ export default function MyPropertiesPage() {
             }
           })
           .catch(err => {
-            console.log(err)
             Swal.fire(
               'Error!',
               'La propiedad no ha sido eliminada.',

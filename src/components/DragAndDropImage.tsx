@@ -39,7 +39,6 @@ export const DragAndDropImage = ({ setImage, image }: Props) => {
           setImage(files[i])
         }
       }
-      console.log(images)
     }
   }
 
@@ -61,8 +60,7 @@ export const DragAndDropImage = ({ setImage, image }: Props) => {
 
     let i: number;
 
-    for(i = 0; i < files.length; i++) {
-      if(files[i].type.split('/')[0] !== 'image') continue;
+    if(files) {
       for(i = 0; i < files?.length; i++) {
         if(files[i].type.split('/')[0] !== 'image') continue;
         if(images.name !== files[i].name) {

@@ -68,8 +68,6 @@ export default function Page({ params }: { params: { id: string }}) {
     const response = await propertyService.updateProperty(endPoints.properties.update(params.id), formData)
     if(response?.status === 200) {
       router.push('/mis-propiedades')
-    }else {
-      console.log(await response?.json())
     }
   }
 
