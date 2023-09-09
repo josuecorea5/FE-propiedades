@@ -16,8 +16,8 @@ type Category = {
 }
 
 type InfoCoordinates = {
-  lat: number;
-  lng: number;
+  lat: number | string;
+  lng: number | string;
   street: string;
 }
 
@@ -32,8 +32,8 @@ export type InputsProperty = {
   garages: string;
   bathrooms: string;
   street: string;
-  lat: number;
-  lng: number;
+  lat: number | string;
+  lng: number | string;
   image: File
 }
 
@@ -216,7 +216,7 @@ export const CreatePropertyForm = ( { onSubmit }: Props) => {
           <h3 className="text-lg leading-6 font-medium text-gray-900">
             Información general de la propiedad
           </h3>
-          <p>Imágenes de la propiedad</p>
+          <p>Imagen de la propiedad</p>
           {
             errorImage && (<span className='text-red-700 text-xs font-medium'>
               Debes seleccionar una imagen para la propiedad
