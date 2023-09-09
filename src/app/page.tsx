@@ -117,6 +117,13 @@ export default function Home() {
           {newPropertiesByDate.map((property: Property) => (
             <CardProperty key={property?.id} property={property} />
           ))}
+          {
+            newPropertiesByDate.length === 0 && (
+              <div className="col-span-3">
+                <h3 className="text-center text-2xl font-bold">No hay propiedades recientes</h3>
+              </div>
+            )
+          }
         </div>
       </section>
     </div>
