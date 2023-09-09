@@ -5,20 +5,7 @@ import { useSearchParams } from "next/navigation"
 import { useEffect, useState } from "react"
 import endPoints from "@/services";
 import propertyService from "@/services/properties";
-
-type Property = {
-  id: string;
-  image: string;
-  title: string;
-  bedrooms: string;
-  bathrooms: string;
-  price: {
-    name: string
-  },
-  category: {
-    name: string
-  }
-}
+import { Property } from "@/types";
 
 export default function Page() {
   const searchParams = useSearchParams()
@@ -47,8 +34,8 @@ export default function Page() {
           </h2>
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 mt-14">
             {
-              properties.map((property: any) => (
-                <CardProperty key={property?.id} {...property} />
+              properties.map((property: Property) => (
+                <CardProperty key={property?.id} property={property} />
               ))
             }
           </div>

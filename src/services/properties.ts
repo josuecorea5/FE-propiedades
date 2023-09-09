@@ -2,22 +2,22 @@ import Cookie from 'js-cookie';
 
 class PropertyService {
 
-  private static token = Cookie.get('token');
-
   static async getProperties(url: string) {
+    const token = Cookie.get('token');
     const response = await fetch(url, {
       headers: {
-        'Authorization': `Bearer ${this.token}`
+        'Authorization': `Bearer ${token}`
       }
     });
     return response;
   }
 
   static async getProperty(url: string) {
+    const token = Cookie.get('token');
     const response = await fetch(url, {
       method: 'GET',
       headers: {
-        'Authorization': `Bearer ${this.token}`
+        'Authorization': `Bearer ${token}`
       }
     })
     return response;
@@ -47,10 +47,11 @@ class PropertyService {
   }
 
   static async sendMessageToSeller(url: string, message: string) {
+    const token = Cookie.get('token');
     const response = await fetch(url, {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${this.token}`,
+        'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({ message })
@@ -60,10 +61,11 @@ class PropertyService {
   }
 
   static async getMessagesOfProperty(url: string) {
+    const token = Cookie.get('token');
     const response = await fetch(url, {
       method: 'GET',
       headers: {
-        'Authorization': `Bearer ${this.token}`
+        'Authorization': `Bearer ${token}`
       }
     })
     const data = await response.json();
@@ -72,11 +74,12 @@ class PropertyService {
 
   static async createProperty(url: string, property: FormData) {
     try {
+      const token = Cookie.get('token');
       const response = await fetch(url, {
         method: 'POST',
         body: property,
         headers: {
-          'Authorization': `Bearer ${this.token}`
+          'Authorization': `Bearer ${token}`
         }
       })
       const data = await response.json();
@@ -88,10 +91,11 @@ class PropertyService {
 
   static async updateProperty(url: string, property: FormData) {
     try {
+      const token = Cookie.get('token');
       const response = await fetch(url, {
         method: 'PUT',
         headers: {
-          'Authorization': `Bearer ${this.token}`
+          'Authorization': `Bearer ${token}`
         },
         body: property
       })
@@ -103,10 +107,11 @@ class PropertyService {
 
   static async updatePropertyPublished(url: string) {
     try {
+      const token = Cookie.get('token');
       const response = await fetch(url, {
         method: 'PATCH',
         headers: {
-          'Authorization': `Bearer ${this.token}`
+          'Authorization': `Bearer ${token}`
         }
       })
       const data = await response.json();
@@ -118,10 +123,11 @@ class PropertyService {
 
   static async deleteProperty(url: string) {
     try {
+      const token = Cookie.get('token');
       const response = await fetch(url, {
         method: 'DELETE',
         headers: {
-          'Authorization': `Bearer ${this.token}`
+          'Authorization': `Bearer ${token}`
         }
       })
       return response;

@@ -8,9 +8,10 @@ import Link from 'next/link';
 import { ContactForm } from '@/components/ContactForm';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
+import { Property } from '@/types';
 
 export default function Page({ params }: { params: { id: string }}) {
-  const [property, setProperty] = useState<any>({})
+  const [property, setProperty] = useState<Property>({} as Property)
   const { isAuthenticated } = useAuth();
   const [showFormContact, setShowFormContact] = useState<boolean>(false);
   const [isOwner, setIsOwner] = useState<boolean>(false);
@@ -21,6 +22,7 @@ export default function Page({ params }: { params: { id: string }}) {
     propertyService.getPropertyPublished(endPoints.properties.getOnePublished(params.id))
       .then(res => {
         if(!res.error) {
+          console.log(res)
           setProperty(res)
         }else {
          router.push('/mis-propiedades')
@@ -73,7 +75,11 @@ export default function Page({ params }: { params: { id: string }}) {
       </div>
       <div className='mt-5 lg:flex md:gap-4'>
         <div className='md:w-3/3 lg:w-2/3 bg-white shadow rounded-lg'>
-          <Image width={1000} height={1000} src={property.image} alt={`Imagen de la propiedad ${property.title}`} />
+          {
+            property?.image && (
+              <Image width={1000} height={1000} src={property?.image} alt={`Imagen de la propiedad ${property.title}`} />
+            )
+          }
           <div className='px-5 py-10 space-y-5'>
             <p>{property.description}</p>
             <h2 className='text-2xl leading-6 font-bold text-gray-900'>

@@ -22,24 +22,24 @@ export default function MyPropertiesPage() {
     async function getProperties() {
       try {
         const res = await propertyService.getProperties(endPoints.properties.getAll)
-      if(res.status === 500) {
-        router.push('/auth/login')
-      }else {
-        const data = await res.json()
-        if(!data?.properties?.length) {
-          setAreProperties(false)
+        if(res.status === 500) {
+          router.push('/auth/login')
         }else {
-          setAreProperties(true)
-          setProperties(data?.properties)
-          setTotalPages(data?.totalPages)
-          setCurrentPage(data?.currentPage)
-          setPagination({
-            totalItems: data?.total,
-            offset: data?.offset,
-            limit: data?.limit
-          })
+          const data = await res.json()
+          if(!data?.properties?.length) {
+            setAreProperties(false)
+          }else {
+            setAreProperties(true)
+            setProperties(data?.properties)
+            setTotalPages(data?.totalPages)
+            setCurrentPage(data?.currentPage)
+            setPagination({
+              totalItems: data?.total,
+              offset: data?.offset,
+              limit: data?.limit
+            })
+          }
         }
-      }
       } catch (error) {
         console.log(error)
       }
