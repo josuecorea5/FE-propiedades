@@ -3,6 +3,7 @@
 import { CreatePropertyForm, InputsProperty } from "@/components/CreatePropertyForm";
 import endPoints from "@/services";
 import propertyService from '@/services/properties'
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 export default function CreatePropertyPage() {
@@ -38,6 +39,9 @@ export default function CreatePropertyPage() {
         Bienes
         <span className="font-normal">Raices</span>
       </h1>
+      <Link className="rounded py-2 px-10 bg-indigo-600 hover:bg-indigo-700 text-sm font-bold text-center text-white inline-block my-5 w-full sm:w-auto" href='/mis-propiedades'>
+        Volver
+      </Link>
       <h2 className="text-center text-2xl font-extrabold">
         Crear propiedad
       </h2>

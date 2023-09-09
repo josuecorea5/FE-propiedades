@@ -64,6 +64,9 @@ export default function Page({ params }: { params: { id: string }}) {
 
   return (
     <div className='py-5'>
+      <Link className="rounded py-2 px-10 bg-indigo-600 hover:bg-indigo-700 text-sm font-bold text-center text-white inline-block my-5 w-full sm:w-auto" href='/mis-propiedades'>
+        Volver
+      </Link>
       <h1 className='text-4xl my-10 font-extrabold text-center'>
         {property.title}
       </h1>

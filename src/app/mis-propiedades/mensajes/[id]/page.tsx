@@ -27,7 +27,7 @@ export default function Page({ params }: { params: { id: string}}) {
       <h2 className='text-2xl font-extrabold text-center my-10'>
         Mensajes de propiedades
       </h2>
-      <Link className="rounded py-2 px-10 bg-indigo-600 hover:bg-indigo-700 text-sm font-bold text-center text-white inline-block my-5 w-full md:w-auto" href='/mis-propiedades'>
+      <Link className="rounded py-2 px-10 bg-indigo-600 hover:bg-indigo-700 text-sm font-bold text-center text-white inline-block my-5 w-full sm:w-auto" href='/mis-propiedades'>
         Volver
       </Link>
       <div className='mx-auto max-w-4xl bg-white shadow'>
